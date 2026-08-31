@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard - TroquelMaster</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ffb4ab",
+                    "on-tertiary": "#472a00",
+                    "on-secondary-fixed": "#001d32",
+                    "on-surface-variant": "#bfc7d2",
+                    "secondary-fixed": "#cde5ff",
+                    "surface-bright": "#2c3a4d",
+                    "secondary": "#94ccff",
+                    "tertiary-container": "#ca8100",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-container-lowest": "#010f20",
+                    "secondary-container": "#0168a0",
+                    "primary-fixed": "#cce5ff",
+                    "surface-container-high": "#1d2b3d",
+                    "inverse-on-surface": "#233144",
+                    "surface-variant": "#283648",
+                    "surface-container": "#122032",
+                    "inverse-surface": "#d5e3fc",
+                    "surface-container-highest": "#283648",
+                    "on-background": "#d5e3fc",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-secondary-container": "#c9e3ff",
+                    "surface-container-low": "#0d1c2e",
+                    "tertiary": "#ffb95f",
+                    "background": "#051425",
+                    "on-error": "#690005",
+                    "secondary-fixed-dim": "#94ccff",
+                    "tertiary-fixed": "#ffddb8",
+                    "outline": "#89929b",
+                    "surface": "#051425",
+                    "on-primary-container": "#002c47",
+                    "surface-tint": "#93ccff",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-fixed": "#001d31",
+                    "surface-dim": "#051425",
+                    "error-container": "#93000a",
+                    "on-primary": "#003351",
+                    "primary": "#93ccff",
+                    "inverse-primary": "#006398",
+                    "on-secondary-fixed-variant": "#004b74",
+                    "on-tertiary-container": "#3e2400",
+                    "on-secondary": "#003352",
+                    "on-surface": "#d5e3fc",
+                    "on-primary-fixed-variant": "#004b73",
+                    "primary-container": "#3198dc",
+                    "primary-fixed-dim": "#93ccff",
+                    "outline-variant": "#3f4850"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "gutter": "16px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "base": "4px",
+                    "container-margin": "24px"
+            },
+            "fontFamily": {
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "utility-mono": [
+                            "monospace"
+                    ],
+                    "label-caps": [
+                            "Inter"
+                    ],
+                    "body-sm": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "headline-lg-mobile": [
+                            "Inter"
+                    ],
+                    "headline-lg": [
+                            "Inter"
+                    ],
+                    "display-metrics": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "body-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "utility-mono": [
+                            "13px",
+                            {
+                                    "lineHeight": "18px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-metrics": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #051425; }
+        ::-webkit-scrollbar-thumb { background: #283648; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f4850; }
+        
+        .glass-card {
+            background-color: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-lg antialiased overflow-hidden flex h-screen">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-surface-container border-r border-outline-variant flex-col p-md z-50">
+<!-- Brand Header -->
+<div class="mb-xl flex items-center gap-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md font-bold text-primary">TroquelMaster</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Gestión de Troqueles</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 space-y-2 overflow-y-auto pr-2">
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container font-bold rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+<span class="font-body-sm text-body-sm">Cotizador / Escáner</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-body-sm text-body-sm">Trabajos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-body-sm text-body-sm">Clientes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-sm text-body-sm">Almacén</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-sm text-body-sm">Caja</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-sm text-body-sm">Reportes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-sm text-body-sm">Tarifas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-sm text-body-sm">Configuración</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar (Shared Component) -->
+<header class="flex justify-between items-center h-16 px-lg bg-surface border-b border-outline-variant docked full-width top-0 sticky z-40">
+<!-- Mobile Brand -->
+<div class="md:hidden font-headline-md text-headline-md font-bold text-primary">TroquelMaster</div>
+<!-- Left Side Actions -->
+<div class="hidden md:flex items-center flex-1">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full bg-surface-container border border-outline-variant rounded-full py-1.5 pl-9 pr-4 text-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Buscar trabajos, clientes..." type="text"/>
+</div>
+</div>
+<!-- Right Side Actions -->
+<div class="flex items-center gap-md">
+<div class="font-utility-mono text-utility-mono text-on-surface-variant hidden sm:block">24 Oct 2023</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-1">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-1">
+<span class="material-symbols-outlined">settings_suggest</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-1">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="flex-1 overflow-y-auto p-lg lg:p-xl custom-scrollbar">
+<!-- Page Header & Global Action -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-xl gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Visión General</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Resumen operativo y estado de producción en tiempo real.</p>
+</div>
+<button class="bg-primary hover:bg-primary-container text-on-primary hover:text-on-primary-container px-6 py-2.5 rounded-full font-bold flex items-center gap-2 transition-colors shadow-[0_0_15px_rgba(2,132,199,0.3)] hover:shadow-[0_0_20px_rgba(2,132,199,0.5)]">
+<span class="material-symbols-outlined text-lg">add</span>
+                    Nuevo Trabajo
+                </button>
+</div>
+<!-- Metric Cards Bento Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-md mb-xl">
+<!-- Sales Today -->
+<div class="bg-surface-container-high border border-outline-variant rounded-xl p-md flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Ventas Hoy</span>
+<span class="material-symbols-outlined text-secondary">payments</span>
+</div>
+<div class="mt-4">
+<div class="font-display-metrics text-display-metrics text-on-surface">S/. 0.00</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">horizontal_rule</span>
+<span>Sin variación</span>
+</div>
+</div>
+</div>
+<!-- Jobs in Production -->
+<div class="bg-surface-container-high border border-outline-variant rounded-xl p-md flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">En Producción</span>
+<span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+</div>
+<div class="mt-4">
+<div class="font-display-metrics text-display-metrics text-on-surface">0</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span>Trabajos activos</span>
+</div>
+</div>
+</div>
+<!-- Pending Jobs -->
+<div class="bg-surface-container-high border border-outline-variant rounded-xl p-md flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Pendientes</span>
+<span class="material-symbols-outlined text-tertiary">schedule</span>
+</div>
+<div class="mt-4">
+<div class="font-display-metrics text-display-metrics text-on-surface">0</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span>En cola de espera</span>
+</div>
+</div>
+</div>
+<!-- Critical Stock -->
+<div class="bg-surface-container-high border border-error/50 rounded-xl p-md flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute inset-0 bg-error/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start relative z-10">
+<span class="font-label-caps text-label-caps text-error uppercase">Stock Crítico</span>
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="mt-4 relative z-10">
+<div class="font-display-metrics text-display-metrics text-error">0</div>
+<div class="font-body-sm text-body-sm text-error/80 mt-1 flex items-center gap-1">
+<span>Materiales por agotar</span>
+</div>
+</div>
+</div>
+<!-- Estimated Profit -->
+<div class="bg-surface-container-high border border-outline-variant rounded-xl p-md flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Ganancia Est.</span>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<div class="mt-4">
+<div class="font-display-metrics text-display-metrics text-on-surface">S/. 0.00</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-1">
+<span>Proyección mensual</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-md mb-xl">
+<!-- Sales Trends Chart (Takes 2 columns on lg) -->
+<div class="bg-surface-container-high border border-outline-variant rounded-xl p-md lg:col-span-2 flex flex-col h-80">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Tendencia de Ventas (7 Días)</h2>
+<button class="text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex-1 relative w-full h-full">
+<canvas id="salesChart"></canvas>
+</div>
+</div>
+<!-- Production Distribution Chart -->
+<div class="bg-surface-container-high border border-outline-variant rounded-xl p-md flex flex-col h-80">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Distribución por Tipo</h2>
+</div>
+<div class="flex-1 relative w-full h-full flex justify-center items-center">
+<canvas id="distributionChart"></canvas>
+</div>
+</div>
+</div>
+<!-- Recent Jobs Table -->
+<div class="bg-surface-container-high border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-md border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-on-surface">Trabajos Recientes</h2>
+<a class="text-primary hover:text-primary-container font-body-sm text-body-sm font-semibold flex items-center gap-1" href="#">
+                        Ver todos <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-caps text-label-caps uppercase">
+<th class="p-3 pl-md font-bold">Código</th>
+<th class="p-3 font-bold">Cliente</th>
+<th class="p-3 font-bold">Nombre del Trabajo</th>
+<th class="p-3 font-bold">Estado</th>
+<th class="p-3 pr-md font-bold text-right">Total (S/.)</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<!-- Empty State for now as requested values are 0 -->
+<tr class="border-b border-outline-variant/50 hover:bg-surface-variant/30 transition-colors">
+<td class="p-6 text-center text-on-surface-variant" colspan="5">
+<div class="flex flex-col items-center justify-center gap-2">
+<span class="material-symbols-outlined text-4xl text-outline">inbox</span>
+<p>No hay trabajos recientes para mostrar.</p>
+</div>
+</td>
+</tr>
+<!-- Sample Row (Commented out to match 0 metrics request, but keeping structure for reference) -->
+<!--
+                            <tr class="border-b border-outline-variant/50 hover:bg-surface-variant/30 transition-colors cursor-pointer group">
+                                <td class="p-3 pl-md font-utility-mono text-utility-mono text-on-surface">TRQ-2023-1042</td>
+                                <td class="p-3 text-on-surface">Empaques Nacionales SAC</td>
+                                <td class="p-3 text-on-surface">Cajas Pizza 32cm Cartón Corrugado</td>
+                                <td class="p-3">
+                                    <span class="inline-flex items-center gap-1 px-2 py-1 rounded-sm bg-primary-container/20 text-primary border border-primary/30 text-xs font-bold uppercase tracking-wider">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                                        En corte
+                                    </span>
+                                </td>
+                                <td class="p-3 pr-md text-right text-on-surface font-utility-mono">1,250.00</td>
+                            </tr>
+                            -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- Chart Scripts -->
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dark theme chart defaults
+            Chart.defaults.color = '#89929b'; // outline color
+            Chart.defaults.font.family = 'Inter, sans-serif';
+            
+            // Sales Trend Chart
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            
+            // Create gradient for line chart
+            const gradient = salesCtx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(147, 204, 255, 0.5)'); // primary with opacity
+            gradient.addColorStop(1, 'rgba(147, 204, 255, 0.0)');
+
+            new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+                    datasets: [{
+                        label: 'Ventas (S/.)',
+                        data: [0, 0, 0, 0, 0, 0, 0], // Zero data as requested
+                        borderColor: '#93ccff', // primary
+                        backgroundColor: gradient,
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#051425', // surface
+                        pointBorderColor: '#93ccff', // primary
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(18, 32, 50, 0.9)', // surface-container
+                            titleColor: '#d5e3fc',
+                            bodyColor: '#d5e3fc',
+                            borderColor: '#3f4850', // outline-variant
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#283648', // surface-variant
+                                drawBorder: false
+                            },
+                            ticks: {
+                                callback: function(value) { return 'S/.' + value; }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Distribution Chart (Doughnut)
+            const distCtx = document.getElementById('distributionChart').getContext('2d');
+            new Chart(distCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cajas', 'Etiquetas', 'Empaques', 'Cartón'],
+                    datasets: [{
+                        data: [1, 1, 1, 1], // Dummy equal data to show empty state circle
+                        backgroundColor: [
+                            '#283648', // surface-variant (showing empty state colors)
+                            '#1d2b3d', // surface-container-high
+                            '#122032', // surface-container
+                            '#0d1c2e'  // surface-container-low
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function() { return ' Sin datos'; }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body></html>

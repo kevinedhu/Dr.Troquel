@@ -1,0 +1,534 @@
+/* ═══════════════════════════════════════════════════════════════
+   TroquelMaster Design System
+   Industrial ERP Dark Theme — Inter Typography
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+/* ── CSS Custom Properties ── */
+:root {
+  /* Surface / Background */
+  --surface: #051425;
+  --surface-dim: #051425;
+  --surface-bright: #2c3a4d;
+  --surface-container-lowest: #010f20;
+  --surface-container-low: #0d1c2e;
+  --surface-container: #122032;
+  --surface-container-high: #1d2b3d;
+  --surface-container-highest: #283648;
+  --background: #051425;
+
+  /* On Surface */
+  --on-surface: #d5e3fc;
+  --on-surface-variant: #bfc7d2;
+  --on-background: #d5e3fc;
+  --inverse-surface: #d5e3fc;
+  --inverse-on-surface: #233144;
+
+  /* Primary */
+  --primary: #93ccff;
+  --on-primary: #003351;
+  --primary-container: #3198dc;
+  --on-primary-container: #002c47;
+  --inverse-primary: #006398;
+  --primary-fixed: #cce5ff;
+  --primary-fixed-dim: #93ccff;
+  --on-primary-fixed: #001d31;
+  --on-primary-fixed-variant: #004b73;
+
+  /* Secondary */
+  --secondary: #94ccff;
+  --on-secondary: #003352;
+  --secondary-container: #0168a0;
+  --on-secondary-container: #c9e3ff;
+  --secondary-fixed: #cde5ff;
+  --secondary-fixed-dim: #94ccff;
+  --on-secondary-fixed: #001d32;
+  --on-secondary-fixed-variant: #004b74;
+
+  /* Tertiary */
+  --tertiary: #ffb95f;
+  --on-tertiary: #472a00;
+  --tertiary-container: #ca8100;
+  --on-tertiary-container: #3e2400;
+  --tertiary-fixed: #ffddb8;
+  --tertiary-fixed-dim: #ffb95f;
+  --on-tertiary-fixed: #2a1700;
+  --on-tertiary-fixed-variant: #653e00;
+
+  /* Error */
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+
+  /* Outline */
+  --outline: #89929b;
+  --outline-variant: #3f4850;
+
+  /* Surface Tint & Variant */
+  --surface-tint: #93ccff;
+  --surface-variant: #283648;
+
+  /* Spacing (8px rhythmic scale) */
+  --space-base: 4px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-gutter: 16px;
+  --space-container-margin: 24px;
+
+  /* Border Radius */
+  --radius-sm: 0.125rem;
+  --radius-default: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Industrial Palette (Functional) */
+  --industrial-blue: #0284C7;
+  --success-green: #22C55E;
+  --workshop-yellow: #F59E0B;
+  --alert-red: #EF4444;
+  --steel-gray: #64748B;
+}
+
+/* ── Base Reset & Typography ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--on-surface);
+  background-color: var(--background);
+  overflow: hidden;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── Typography Scale ── */
+.text-display-metrics {
+  font-family: 'Inter', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-headline-lg {
+  font-family: 'Inter', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+}
+
+.text-headline-lg-mobile {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.text-headline-md {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.text-body-lg {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.text-body-sm {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.text-label-caps {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.text-utility-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-variant);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--outline-variant);
+}
+
+/* ── Card Levels (Tonal Layering) ── */
+.card-level-0 {
+  background-color: var(--background);
+}
+
+.card-level-1 {
+  background-color: var(--surface-container-high);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+}
+
+.card-level-2 {
+  background-color: var(--surface-bright);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Ghost Border ── */
+.ghost-border {
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.ghost-border:hover,
+.ghost-border:focus-within {
+  border-color: var(--outline-variant);
+}
+
+/* ── Status Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-cutting {
+  background-color: var(--industrial-blue);
+  color: #ffffff;
+}
+
+.badge-ready {
+  background-color: var(--success-green);
+  color: #ffffff;
+}
+
+.badge-queued {
+  background-color: var(--steel-gray);
+  color: #ffffff;
+}
+
+.badge-maintenance,
+.badge-armado {
+  background-color: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+}
+
+.badge-critical {
+  background-color: var(--error-container);
+  color: var(--on-error-container);
+}
+
+.badge-optimal {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #ffffff;
+}
+
+.badge-reorder {
+  background-color: rgba(234, 179, 8, 0.2);
+  color: #000000;
+}
+
+/* ── Industrial Data Tables ── */
+.table-industrial {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.table-industrial thead tr {
+  background-color: var(--surface-container);
+}
+
+.table-industrial thead th {
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  white-space: nowrap;
+}
+
+.table-industrial tbody tr {
+  border-bottom: 1px solid rgba(63, 72, 80, 0.5);
+  transition: background-color 0.15s ease;
+}
+
+.table-industrial tbody tr:nth-child(even) {
+  background-color: rgba(13, 28, 46, 0.3);
+}
+
+.table-industrial tbody tr:hover {
+  background-color: rgba(2, 132, 199, 0.1);
+}
+
+.table-industrial tbody td {
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--on-surface);
+}
+
+/* ── Buttons ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 15px rgba(147, 204, 255, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
+  box-shadow: 0 0 25px rgba(147, 204, 255, 0.5);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--on-surface);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--surface-variant);
+}
+
+/* ── Form Inputs ── */
+.input-field {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(147, 204, 255, 0.2);
+}
+
+.input-field::placeholder {
+  color: var(--outline);
+}
+
+/* ── Viewer Grid (Cotizador) ── */
+.viewer-grid {
+  background-image:
+    linear-gradient(var(--surface-variant) 1px, transparent 1px),
+    linear-gradient(90deg, var(--surface-variant) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: center center;
+}
+
+/* ── Glass Card ── */
+.glass-card {
+  background-color: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+/* ── Progress Bar ── */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background-color: var(--surface-variant);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Link Reset ── */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── Utility ── */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Animations ── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px rgba(147, 204, 255, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(147, 204, 255, 0.5); }
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+/* ── Checkbox Custom ── */
+input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--outline-variant);
+  border-radius: 4px;
+  background-color: var(--surface);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--on-primary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+input[type="checkbox"]:focus {
+  box-shadow: 0 0 0 2px rgba(147, 204, 255, 0.3);
+}
+
+/* ── Select Custom ── */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 5L6 8L9 5' stroke='%2389929b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px !important;
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--surface-variant);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-default);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.toast.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}

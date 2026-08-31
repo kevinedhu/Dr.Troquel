@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configuración y Tarifas - TroquelMaster</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom scrollbar for industrial feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #051425; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #283648; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f4850; 
+        }
+
+        /* Tab transition styles */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#472a00",
+                        "on-secondary-fixed": "#001d32",
+                        "on-surface-variant": "#bfc7d2",
+                        "secondary-fixed": "#cde5ff",
+                        "surface-bright": "#2c3a4d",
+                        "secondary": "#94ccff",
+                        "tertiary-container": "#ca8100",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-container-lowest": "#010f20",
+                        "secondary-container": "#0168a0",
+                        "primary-fixed": "#cce5ff",
+                        "surface-container-high": "#1d2b3d",
+                        "inverse-on-surface": "#233144",
+                        "surface-variant": "#283648",
+                        "surface-container": "#122032",
+                        "inverse-surface": "#d5e3fc",
+                        "surface-container-highest": "#283648",
+                        "on-background": "#d5e3fc",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-secondary-container": "#c9e3ff",
+                        "surface-container-low": "#0d1c2e",
+                        "tertiary": "#ffb95f",
+                        "background": "#051425",
+                        "on-error": "#690005",
+                        "secondary-fixed-dim": "#94ccff",
+                        "tertiary-fixed": "#ffddb8",
+                        "outline": "#89929b",
+                        "surface": "#051425",
+                        "on-primary-container": "#002c47",
+                        "surface-tint": "#93ccff",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed": "#001d31",
+                        "surface-dim": "#051425",
+                        "error-container": "#93000a",
+                        "on-primary": "#003351",
+                        "primary": "#93ccff",
+                        "inverse-primary": "#006398",
+                        "on-secondary-fixed-variant": "#004b74",
+                        "on-tertiary-container": "#3e2400",
+                        "on-secondary": "#003352",
+                        "on-surface": "#d5e3fc",
+                        "on-primary-fixed-variant": "#004b73",
+                        "primary-container": "#3198dc",
+                        "primary-fixed-dim": "#93ccff",
+                        "outline-variant": "#3f4850"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "base": "4px",
+                        "container-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "utility-mono": ["monospace"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-metrics": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "utility-mono": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-metrics": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-sm min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-surface-container dark:bg-surface-container h-screen w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline-variant flex flex-col p-md z-50">
+<!-- Brand Header -->
+<div class="flex items-center gap-sm mb-xl px-sm">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-primary font-bold">precision_manufacturing</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">TroquelMaster</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Gestión de Troqueles</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-xs flex-1 overflow-y-auto">
+<!-- Dashboard -->
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+<!-- Cotizador / Escáner -->
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-body-sm text-body-sm">Cotizador / Escáner</span>
+</a>
+<!-- Trabajos -->
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-body-sm text-body-sm">Trabajos</span>
+</a>
+<!-- Clientes -->
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-body-sm text-body-sm">Clientes</span>
+</a>
+<!-- Almacén -->
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-sm text-body-sm">Almacén</span>
+</a>
+<!-- Caja -->
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-sm text-body-sm">Caja</span>
+</a>
+<!-- Reportes -->
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-body-sm text-body-sm">Reportes</span>
+</a>
+<!-- Tarifas -->
+<a class="flex items-center gap-sm px-sm py-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-sm text-body-sm">Tarifas</span>
+</a>
+<!-- Configuración (ACTIVE) -->
+<a class="flex items-center gap-sm px-sm py-sm bg-secondary-container text-on-secondary-container font-bold rounded-lg transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined fill" data-icon="settings">settings</span>
+<span class="font-body-sm text-body-sm">Configuración</span>
+</a>
+</nav>
+<!-- Bottom User Info Area (Implied in industrial systems) -->
+<div class="mt-auto pt-md border-t border-outline-variant">
+<div class="flex items-center gap-sm px-sm">
+<span class="material-symbols-outlined text-on-surface-variant">engineering</span>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface">Ope. Principal</p>
+<p class="text-xs text-on-surface-variant">Turno A</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Wrapper -->
+<div class="flex-1 flex flex-col ml-64 w-[calc(100%-16rem)] min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant docked full-width top-0 sticky z-40 flex justify-between items-center h-16 px-lg">
+<!-- Breadcrumbs / Page Title Context in Top Nav -->
+<div class="flex items-center gap-sm">
+<span class="font-headline-md text-headline-md font-bold text-primary">Configuración Sistema</span>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-lg">
+<div class="flex items-center gap-sm">
+<span class="font-utility-mono text-utility-mono text-on-surface-variant bg-surface-variant px-2 py-1 rounded">24 Oct 2023</span>
+</div>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<button class="hover:text-primary transition-colors cursor-pointer p-1 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:text-primary transition-colors cursor-pointer p-1 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+</button>
+<button class="hover:text-primary transition-colors cursor-pointer p-1 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 p-container-margin overflow-y-auto">
+<!-- Page Header & Global Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-xl gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Configuración y Tarifas</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 max-w-2xl">Gestione las variables globales de cotización, impuestos aplicables y estado del sistema. Los cambios aquí afectan a todas las nuevas cotizaciones generadas.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-4 py-2 border border-outline text-on-surface rounded-lg hover:bg-surface-variant transition-colors font-label-caps text-label-caps flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                        Historial de Cambios
+                    </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors font-label-caps text-label-caps flex items-center gap-2 shadow-sm" onclick="saveConfiguration()">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                        Guardar Configuración
+                    </button>
+</div>
+</div>
+<!-- Segmented Control / Tabs -->
+<div class="mb-lg border-b border-outline-variant">
+<nav aria-label="Tabs" class="flex gap-lg">
+<button class="tab-btn pb-sm font-label-caps text-label-caps text-primary border-b-2 border-primary transition-colors" id="btn-tab-tarifas" onclick="switchTab('tab-tarifas')">
+                        Tarifas Globales
+                    </button>
+<button class="tab-btn pb-sm font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors" id="btn-tab-impuestos" onclick="switchTab('tab-impuestos')">
+                        Ajustes Fiscales
+                    </button>
+<button class="tab-btn pb-sm font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors" id="btn-tab-sistema" onclick="switchTab('tab-sistema')">
+                        Estado del Sistema
+                    </button>
+</nav>
+</div>
+<!-- Tab Content: Tarifas Globales -->
+<div class="tab-content active" id="tab-tarifas">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Base Rates Card -->
+<div class="lg:col-span-2 bg-surface-variant border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-primary">price_change</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Variables de Cotización</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Input Group -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Precio Base por CM Lineal ($)</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-on-surface-variant sm:text-sm">$</span>
+</div>
+<input class="block w-full pl-7 pr-12 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-utility-mono text-utility-mono" placeholder="0.00" step="0.01" type="number" value="0.15"/>
+</div>
+</div>
+<!-- Input Group -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Costo Base Madera (m²)</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-on-surface-variant sm:text-sm">$</span>
+</div>
+<input class="block w-full pl-7 pr-12 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-utility-mono text-utility-mono" placeholder="0.00" step="0.5" type="number" value="45.00"/>
+</div>
+</div>
+<!-- Input Group -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Costo Pleca (m)</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-on-surface-variant sm:text-sm">$</span>
+</div>
+<input class="block w-full pl-7 pr-12 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-utility-mono text-utility-mono" placeholder="0.00" step="0.1" type="number" value="2.50"/>
+</div>
+</div>
+<!-- Input Group -->
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Costo Goma Expulsora (m)</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-on-surface-variant sm:text-sm">$</span>
+</div>
+<input class="block w-full pl-7 pr-12 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-utility-mono text-utility-mono" placeholder="0.00" step="0.1" type="number" value="1.80"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Services & Fees Card -->
+<div class="bg-surface-variant border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-primary">design_services</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Cargos Adicionales</h3>
+</div>
+<div class="space-y-md">
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Tarifa de Diseño (Hora)</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-on-surface-variant sm:text-sm">$</span>
+</div>
+<input class="block w-full pl-7 pr-12 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-utility-mono text-utility-mono" step="1" type="number" value="35.00"/>
+</div>
+</div>
+<div class="p-sm bg-surface rounded border border-outline-variant flex gap-sm items-start">
+<span class="material-symbols-outlined text-tertiary text-[20px] mt-0.5">info</span>
+<p class="text-xs text-on-surface-variant leading-tight">La tarifa de diseño se aplica manualmente en la cotización dependiendo de la complejidad del archivo CAD proporcionado por el cliente.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tab Content: Ajustes Fiscales -->
+<div class="tab-content" id="tab-impuestos">
+<div class="max-w-4xl bg-surface-variant border border-outline-variant rounded-xl p-lg">
+<div class="flex items-center gap-sm mb-md border-b border-outline-variant pb-sm">
+<span class="material-symbols-outlined text-primary">receipt_long</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Datos de Facturación</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-lg gap-y-md">
+<div class="md:col-span-2">
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Razón Social</label>
+<input class="block w-full px-3 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-body-sm" type="text" value="Troqueles y Suajes Industriales S.A. de C.V."/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">RUC / NIT</label>
+<input class="block w-full px-3 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-utility-mono text-utility-mono" type="text" value="TSI-890214-H8A"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Porcentaje IGV / IVA (%)</label>
+<input class="block w-full px-3 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-utility-mono text-utility-mono" step="0.1" type="number" value="16.0"/>
+</div>
+<div class="md:col-span-2">
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Dirección Fiscal</label>
+<textarea class="block w-full px-3 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-body-sm resize-none" rows="2">Av. de la Industria 1450, Parque Industrial Norte, Nave 4.</textarea>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-surface-variant mb-xs">Serie Comprobantes</label>
+<input class="block w-full px-3 py-2 bg-surface border border-outline-variant rounded-md text-on-surface focus:ring-1 focus:ring-primary focus:border-primary font-utility-mono text-utility-mono" type="text" value="A-TRQ"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Tab Content: Estado del Sistema -->
+<div class="tab-content" id="tab-sistema">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg max-w-5xl">
+<!-- Integrations Status -->
+<div class="bg-surface-variant border border-outline-variant rounded-xl p-lg flex flex-col h-full">
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">hub</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Integraciones ERP</h3>
+</div>
+<!-- Connected Badge -->
+<span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-full bg-primary-container text-on-primary-container font-label-caps text-[10px]">
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary-container animate-pulse"></span>
+                                CONECTADO
+                            </span>
+</div>
+<p class="font-body-sm text-on-surface-variant mb-md">El sistema está sincronizando datos maestros de inventario (madera, pleca) con SAP Business One.</p>
+<div class="mt-auto space-y-2 bg-surface rounded border border-outline-variant p-sm font-utility-mono text-utility-mono text-xs">
+<div class="flex justify-between border-b border-outline-variant pb-1">
+<span class="text-on-surface-variant">Último Ping:</span>
+<span class="text-primary">Hace 2 min</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Endpoint:</span>
+<span class="text-on-surface truncate ml-2">api.sap-b1.local/v1/sync</span>
+</div>
+</div>
+</div>
+<!-- App Mode -->
+<div class="bg-surface-variant border border-outline-variant rounded-xl p-lg flex flex-col h-full">
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-tertiary">warning</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Modo de Operación</h3>
+</div>
+<!-- Demo Mode Badge -->
+<span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-full bg-tertiary-container text-on-tertiary-container font-label-caps text-[10px]">
+                                MODO DEMO
+                            </span>
+</div>
+<p class="font-body-sm text-on-surface-variant mb-md">El sistema está operando en entorno aislado de pruebas. Las cotizaciones generadas no afectarán el inventario real ni la facturación.</p>
+<div class="mt-auto">
+<button class="w-full py-2 border border-tertiary text-tertiary rounded hover:bg-tertiary hover:text-on-tertiary transition-colors font-label-caps text-label-caps flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">rocket_launch</span>
+                                Cambiar a Producción
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Toast Notification (Hidden by default) -->
+<div class="fixed bottom-lg right-lg bg-surface-variant border-l-4 border-primary shadow-lg rounded p-md flex items-center gap-md transform translate-y-20 opacity-0 transition-all duration-300 z-50 pointer-events-none" id="toast-success">
+<span class="material-symbols-outlined text-primary fill">check_circle</span>
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface">Configuración Guardada</h4>
+<p class="text-xs text-on-surface-variant mt-0.5">Los cambios globales han sido aplicados al sistema.</p>
+</div>
+</div>
+<!-- Logic -->
+<script>
+        // Simple Tab Logic
+        function switchTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            // Reset all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                btn.classList.add('text-on-surface-variant');
+            });
+
+            // Show selected content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Highlight selected button
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('text-on-surface-variant');
+            activeBtn.classList.add('text-primary', 'border-b-2', 'border-primary');
+        }
+
+        // Toast Simulation
+        function saveConfiguration() {
+            const toast = document.getElementById('toast-success');
+            
+            // Show toast
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body></html>

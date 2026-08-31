@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TroquelMaster - Almacén</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#472a00",
+                        "on-secondary-fixed": "#001d32",
+                        "on-surface-variant": "#bfc7d2",
+                        "secondary-fixed": "#cde5ff",
+                        "surface-bright": "#2c3a4d",
+                        "secondary": "#94ccff",
+                        "tertiary-container": "#ca8100",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-container-lowest": "#010f20",
+                        "secondary-container": "#0168a0",
+                        "primary-fixed": "#cce5ff",
+                        "surface-container-high": "#1d2b3d",
+                        "inverse-on-surface": "#233144",
+                        "surface-variant": "#283648",
+                        "surface-container": "#122032",
+                        "inverse-surface": "#d5e3fc",
+                        "surface-container-highest": "#283648",
+                        "on-background": "#d5e3fc",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-secondary-container": "#c9e3ff",
+                        "surface-container-low": "#0d1c2e",
+                        "tertiary": "#ffb95f",
+                        "background": "#051425",
+                        "on-error": "#690005",
+                        "secondary-fixed-dim": "#94ccff",
+                        "tertiary-fixed": "#ffddb8",
+                        "outline": "#89929b",
+                        "surface": "#051425",
+                        "on-primary-container": "#002c47",
+                        "surface-tint": "#93ccff",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed": "#001d31",
+                        "surface-dim": "#051425",
+                        "error-container": "#93000a",
+                        "on-primary": "#003351",
+                        "primary": "#93ccff",
+                        "inverse-primary": "#006398",
+                        "on-secondary-fixed-variant": "#004b74",
+                        "on-tertiary-container": "#3e2400",
+                        "on-secondary": "#003352",
+                        "on-surface": "#d5e3fc",
+                        "on-primary-fixed-variant": "#004b73",
+                        "primary-container": "#3198dc",
+                        "primary-fixed-dim": "#93ccff",
+                        "outline-variant": "#3f4850"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "base": "4px",
+                        "container-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "utility-mono": ["monospace"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "display-metrics": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "utility-mono": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-metrics": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #0F172A; color: #d5e3fc; } /* Level 0 Background per style guide */
+        .card-level-1 { background-color: #1E293B; border: 1px solid #334155; }
+        .ghost-border { border: 1px solid transparent; transition: border-color 0.2s ease; }
+        .ghost-border:hover, .ghost-border:focus { border-color: #334155; }
+        
+        /* Status Colors per style guide */
+        .status-ready { background-color: rgba(34, 197, 94, 0.2); color: #fff; } /* Success Green */
+        .status-maintenance { background-color: rgba(234, 179, 8, 0.2); color: #000; } /* Workshop Yellow */
+        .status-queued { background-color: rgba(100, 116, 139, 0.2); color: #fff; } /* Neutral Gray */
+        .status-cutting { background-color: rgba(2, 132, 199, 0.2); color: #fff; } /* Industrial Blue */
+        
+        .table-row-hover:hover { background-color: rgba(2, 132, 199, 0.1); }
+    </style>
+</head>
+<body class="bg-background text-on-background flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container h-screen w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline-variant flex flex-col p-md z-50">
+<div class="mb-xl flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-3xl">precision_manufacturing</span>
+<div>
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">TroquelMaster</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Gestión de Troqueles</div>
+</div>
+</div>
+<ul class="flex-1 space-y-xs font-body-sm text-body-sm">
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+<span>Cotizador / Escáner</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span>Trabajos</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Clientes</span>
+</a>
+</li>
+<li>
+<!-- Active State -->
+<a class="flex items-center gap-sm p-sm bg-secondary-container text-on-secondary-container font-bold rounded-lg active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Almacén</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Caja</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Reportes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Tarifas</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-sm p-sm text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Configuración</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-64 flex flex-col h-full bg-[#0F172A]">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface docked full-width top-0 sticky z-40 border-b border-outline-variant dark:border-outline-variant flex justify-between items-center h-16 px-lg">
+<div class="flex items-center gap-sm">
+<div class="relative ghost-border rounded-DEFAULT p-xs flex items-center bg-surface-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm font-body-sm text-on-surface w-64 placeholder-on-surface-variant outline-none" placeholder="Buscar en almacén..." style="focus: box-shadow: 0 0 0 2px #0284C7;" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md text-on-surface-variant">
+<span class="font-utility-mono text-utility-mono">24 Oct 2023</span>
+<button class="hover:text-primary transition-colors cursor-pointer material-symbols-outlined">notifications</button>
+<button class="hover:text-primary transition-colors cursor-pointer material-symbols-outlined">settings_suggest</button>
+<button class="hover:text-primary transition-colors cursor-pointer material-symbols-outlined">account_circle</button>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-auto p-container-margin">
+<div class="flex justify-between items-end mb-xl">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Inventario de Materiales</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Control de existencias e insumos para producción.</p>
+</div>
+<button class="bg-primary text-on-primary font-body-sm text-body-sm font-bold px-md py-sm rounded-DEFAULT flex items-center gap-xs hover:bg-primary-container transition-colors focus:outline-none focus:ring-2 focus:ring-[#0284C7] focus:ring-offset-2 focus:ring-offset-[#0F172A]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                    Nuevo Movimiento
+                </button>
+</div>
+<!-- Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md mb-xl">
+<!-- Card 1: Fleje -->
+<div class="card-level-1 p-md rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant">FLEJE DE CORTE (2pt)</span>
+<span class="px-xs py-base rounded-sm text-xs font-bold status-ready">ÓPTIMO</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-metrics text-display-metrics text-on-surface">450</span>
+<span class="font-utility-mono text-utility-mono text-on-surface-variant">m</span>
+</div>
+<div class="w-full bg-surface-variant h-1 mt-sm rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 85%;"></div>
+</div>
+<p class="font-utility-mono text-[11px] text-on-surface-variant mt-xs">Min: 100 m</p>
+</div>
+</div>
+<!-- Card 2: Pleca -->
+<div class="card-level-1 p-md rounded-lg flex flex-col justify-between border border-[#334155]">
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant">PLECA DE DOBLEZ</span>
+<span class="px-xs py-base rounded-sm text-xs font-bold status-maintenance">REORDENAR</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-metrics text-display-metrics text-tertiary">120</span>
+<span class="font-utility-mono text-utility-mono text-on-surface-variant">m</span>
+</div>
+<div class="w-full bg-surface-variant h-1 mt-sm rounded-full overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 30%;"></div>
+</div>
+<p class="font-utility-mono text-[11px] text-on-surface-variant mt-xs">Min: 150 m</p>
+</div>
+</div>
+<!-- Card 3: Madera -->
+<div class="card-level-1 p-md rounded-lg flex flex-col justify-between border border-error">
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant">MADERA FENÓLICA (18mm)</span>
+<span class="px-xs py-base rounded-sm text-xs font-bold bg-error-container text-on-error-container">CRÍTICO</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-metrics text-display-metrics text-error">2</span>
+<span class="font-utility-mono text-utility-mono text-on-surface-variant">planchas</span>
+</div>
+<div class="w-full bg-surface-variant h-1 mt-sm rounded-full overflow-hidden">
+<div class="bg-error h-full" style="width: 10%;"></div>
+</div>
+<p class="font-utility-mono text-[11px] text-on-surface-variant mt-xs">Min: 10 planchas</p>
+</div>
+</div>
+<!-- Card 4: Goma -->
+<div class="card-level-1 p-md rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-start mb-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant">GOMA BOTADORA</span>
+<span class="px-xs py-base rounded-sm text-xs font-bold status-ready">ÓPTIMO</span>
+</div>
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="font-display-metrics text-display-metrics text-on-surface">1,250</span>
+<span class="font-utility-mono text-utility-mono text-on-surface-variant">unidades</span>
+</div>
+<div class="w-full bg-surface-variant h-1 mt-sm rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 75%;"></div>
+</div>
+<p class="font-utility-mono text-[11px] text-on-surface-variant mt-xs">Min: 500 un.</p>
+</div>
+</div>
+</div>
+<!-- Movement History Table -->
+<div class="card-level-1 rounded-lg overflow-hidden">
+<div class="p-md border-b border-[#334155] bg-surface-container flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-on-surface">Historial de Movimientos Recientes</h2>
+<button class="text-secondary font-body-sm text-body-sm hover:underline">Ver todo</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-variant text-on-surface-variant font-label-caps text-label-caps">
+<th class="p-sm pl-md font-normal">Fecha/Hora</th>
+<th class="p-sm font-normal">Material</th>
+<th class="p-sm font-normal">Movimiento</th>
+<th class="p-sm font-normal text-right">Cantidad</th>
+<th class="p-sm pr-md font-normal">Motivo / OT</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<tr class="table-row-hover border-b border-[#334155] transition-colors">
+<td class="p-sm pl-md font-utility-mono text-utility-mono">24/10 08:30</td>
+<td class="p-sm">Fleje de corte (2pt)</td>
+<td class="p-sm"><span class="text-error flex items-center gap-xs"><span class="material-symbols-outlined text-sm">arrow_downward</span> Salida</span></td>
+<td class="p-sm font-utility-mono text-utility-mono text-right">- 15 m</td>
+<td class="p-sm pr-md text-on-surface-variant">OT-2023-1142</td>
+</tr>
+<tr class="table-row-hover border-b border-[#334155] bg-[#1E293B]/50 transition-colors">
+<td class="p-sm pl-md font-utility-mono text-utility-mono">23/10 16:45</td>
+<td class="p-sm">Madera fenólica (18mm)</td>
+<td class="p-sm"><span class="text-error flex items-center gap-xs"><span class="material-symbols-outlined text-sm">arrow_downward</span> Salida</span></td>
+<td class="p-sm font-utility-mono text-utility-mono text-right">- 1 plancha</td>
+<td class="p-sm pr-md text-on-surface-variant">Mermas por rotura</td>
+</tr>
+<tr class="table-row-hover border-b border-[#334155] transition-colors">
+<td class="p-sm pl-md font-utility-mono text-utility-mono">23/10 11:15</td>
+<td class="p-sm">Goma botadora</td>
+<td class="p-sm"><span class="text-secondary flex items-center gap-xs"><span class="material-symbols-outlined text-sm">arrow_upward</span> Entrada</span></td>
+<td class="p-sm font-utility-mono text-utility-mono text-right">+ 1000 un.</td>
+<td class="p-sm pr-md text-on-surface-variant">Recepción OC-492</td>
+</tr>
+<tr class="table-row-hover border-b border-[#334155] bg-[#1E293B]/50 transition-colors">
+<td class="p-sm pl-md font-utility-mono text-utility-mono">22/10 09:00</td>
+<td class="p-sm">Pleca de doblez</td>
+<td class="p-sm"><span class="text-error flex items-center gap-xs"><span class="material-symbols-outlined text-sm">arrow_downward</span> Salida</span></td>
+<td class="p-sm font-utility-mono text-utility-mono text-right">- 30 m</td>
+<td class="p-sm pr-md text-on-surface-variant">OT-2023-1140</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TroquelMaster - Caja / Balance</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ffb4ab",
+                      "on-tertiary": "#472a00",
+                      "on-secondary-fixed": "#001d32",
+                      "on-surface-variant": "#bfc7d2",
+                      "secondary-fixed": "#cde5ff",
+                      "surface-bright": "#2c3a4d",
+                      "secondary": "#94ccff",
+                      "tertiary-container": "#ca8100",
+                      "on-tertiary-fixed": "#2a1700",
+                      "surface-container-lowest": "#010f20",
+                      "secondary-container": "#0168a0",
+                      "primary-fixed": "#cce5ff",
+                      "surface-container-high": "#1d2b3d",
+                      "inverse-on-surface": "#233144",
+                      "surface-variant": "#283648",
+                      "surface-container": "#122032",
+                      "inverse-surface": "#d5e3fc",
+                      "surface-container-highest": "#283648",
+                      "on-background": "#d5e3fc",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "on-secondary-container": "#c9e3ff",
+                      "surface-container-low": "#0d1c2e",
+                      "tertiary": "#ffb95f",
+                      "background": "#051425",
+                      "on-error": "#690005",
+                      "secondary-fixed-dim": "#94ccff",
+                      "tertiary-fixed": "#ffddb8",
+                      "outline": "#89929b",
+                      "surface": "#051425",
+                      "on-primary-container": "#002c47",
+                      "surface-tint": "#93ccff",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "on-primary-fixed": "#001d31",
+                      "surface-dim": "#051425",
+                      "error-container": "#93000a",
+                      "on-primary": "#003351",
+                      "primary": "#93ccff",
+                      "inverse-primary": "#006398",
+                      "on-secondary-fixed-variant": "#004b74",
+                      "on-tertiary-container": "#3e2400",
+                      "on-secondary": "#003352",
+                      "on-surface": "#d5e3fc",
+                      "on-primary-fixed-variant": "#004b73",
+                      "primary-container": "#3198dc",
+                      "primary-fixed-dim": "#93ccff",
+                      "outline-variant": "#3f4850"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "xs": "4px",
+                      "lg": "24px",
+                      "gutter": "16px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "base": "4px",
+                      "container-margin": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "utility-mono": [
+                              "monospace"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "display-metrics": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "utility-mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-metrics": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-sm antialiased h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<aside class="bg-surface-container dark:bg-surface-container font-body-sm text-body-sm h-screen w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline-variant flex flex-col h-full p-md z-50">
+<div class="flex items-center gap-3 mb-xl px-sm">
+<span class="material-symbols-outlined text-3xl text-primary dark:text-primary">factory</span>
+<div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">TroquelMaster</h1>
+<p class="text-on-surface-variant text-xs opacity-70">Gestión de Troqueles</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+                Cotizador / Escáner
+            </a>
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+                Trabajos
+            </a>
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">groups</span>
+                Clientes
+            </a>
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                Almacén
+            </a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg bg-secondary-container text-on-secondary-container font-bold active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">payments</span>
+                Caja
+            </a>
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                Reportes
+            </a>
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">payments</span>
+                Tarifas
+            </a>
+<a class="flex items-center gap-3 px-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Configuración
+            </a>
+</nav>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col ml-64 min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface font-body-lg text-body-lg border-b border-outline-variant dark:border-outline-variant flex justify-between items-center h-16 px-lg sticky top-0 z-40 w-full">
+<div class="flex items-center">
+<!-- Search Bar Placeholder -->
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="bg-surface-container border-outline-variant text-on-surface text-sm rounded-full pl-10 pr-4 py-1.5 focus:ring-primary focus:border-primary w-64 placeholder-on-surface-variant/50" placeholder="Buscar movimientos..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-sm font-medium text-on-surface-variant hidden md:block">24 Oct 2023</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-2 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-2 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined">settings_suggest</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-2 rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined text-2xl">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 overflow-y-auto p-container-margin bg-background">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background">Caja / Balance</h2>
+<p class="text-on-surface-variant mt-1">Resumen financiero y registro de operaciones diarias.</p>
+</div>
+<button class="bg-primary hover:bg-primary-container text-on-primary font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined">add</span>
+                    Registrar Movimiento
+                </button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-xl">
+<!-- Financial Summary Cards (Bento Items) -->
+<div class="md:col-span-3 bg-surface-container rounded-xl p-md border border-outline-variant flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TOTAL INGRESOS</span>
+<div class="bg-secondary-container/20 p-1 rounded">
+<span class="material-symbols-outlined text-secondary text-sm">arrow_upward</span>
+</div>
+</div>
+<div class="font-display-metrics text-display-metrics text-on-surface">
+                        S/ 14,250
+                    </div>
+<div class="text-xs text-secondary mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +12% vs mes anterior
+                    </div>
+</div>
+<div class="md:col-span-3 bg-surface-container rounded-xl p-md border border-outline-variant flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TOTAL EGRESOS</span>
+<div class="bg-error-container/20 p-1 rounded">
+<span class="material-symbols-outlined text-error text-sm">arrow_downward</span>
+</div>
+</div>
+<div class="font-display-metrics text-display-metrics text-on-surface">
+                        S/ 3,820
+                    </div>
+<div class="text-xs text-on-surface-variant mt-2 flex items-center gap-1">
+                         Gastos operativos y materiales
+                    </div>
+</div>
+<div class="md:col-span-3 bg-surface-container rounded-xl p-md border border-outline-variant flex flex-col justify-between relative overflow-hidden">
+<!-- Subtle gradient background for highlight -->
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">BENEFICIO ESTIMADO</span>
+<span class="material-symbols-outlined text-primary text-sm">account_balance_wallet</span>
+</div>
+<div class="font-display-metrics text-display-metrics text-primary font-bold">
+                            S/ 10,430
+                        </div>
+<div class="text-xs text-on-surface-variant mt-2">
+                            Margen operativo: 73%
+                        </div>
+</div>
+</div>
+<div class="md:col-span-3 bg-surface-container rounded-xl p-md border border-outline-variant flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TOTAL OPERACIONES</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">receipt_long</span>
+</div>
+<div class="font-display-metrics text-display-metrics text-on-surface">
+                        142
+                    </div>
+<div class="flex items-center gap-2 mt-2">
+<span class="inline-flex items-center gap-1 text-[10px] bg-surface-variant px-2 py-0.5 rounded text-on-surface-variant font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> 110 Ingresos
+                        </span>
+<span class="inline-flex items-center gap-1 text-[10px] bg-surface-variant px-2 py-0.5 rounded text-on-surface-variant font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> 32 Egresos
+                        </span>
+</div>
+</div>
+<!-- Charts Area (Simulated) -->
+<div class="md:col-span-8 bg-surface-container rounded-xl p-md border border-outline-variant flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Flujo de Caja</h3>
+<select class="bg-surface border-outline-variant text-on-surface text-xs rounded px-2 py-1 focus:ring-primary focus:border-primary">
+<option>Últimos 7 días</option>
+<option>Este Mes</option>
+<option>Año Actual</option>
+</select>
+</div>
+<div class="flex-1 flex items-end justify-between gap-2 pt-4 relative">
+<!-- Y-axis labels -->
+<div class="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-[10px] text-on-surface-variant">
+<span>S/ 5k</span>
+<span>S/ 2.5k</span>
+<span>0</span>
+</div>
+<!-- Simulated Bar Chart -->
+<div class="w-full h-48 flex items-end justify-around pl-8">
+<div class="w-8 flex flex-col gap-1 justify-end items-center group cursor-pointer">
+<div class="w-full bg-secondary rounded-t-sm h-[80%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full bg-error rounded-t-sm h-[20%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-on-surface-variant mt-1">Lun</span>
+</div>
+<div class="w-8 flex flex-col gap-1 justify-end items-center group cursor-pointer">
+<div class="w-full bg-secondary rounded-t-sm h-[60%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full bg-error rounded-t-sm h-[10%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-on-surface-variant mt-1">Mar</span>
+</div>
+<div class="w-8 flex flex-col gap-1 justify-end items-center group cursor-pointer">
+<div class="w-full bg-secondary rounded-t-sm h-[90%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full bg-error rounded-t-sm h-[30%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-on-surface-variant mt-1">Mié</span>
+</div>
+<div class="w-8 flex flex-col gap-1 justify-end items-center group cursor-pointer">
+<div class="w-full bg-secondary rounded-t-sm h-[40%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full bg-error rounded-t-sm h-[5%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-on-surface-variant mt-1">Jue</span>
+</div>
+<div class="w-8 flex flex-col gap-1 justify-end items-center group cursor-pointer">
+<div class="w-full bg-secondary rounded-t-sm h-[75%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full bg-error rounded-t-sm h-[15%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-on-surface-variant mt-1">Vie</span>
+</div>
+<div class="w-8 flex flex-col gap-1 justify-end items-center group cursor-pointer">
+<div class="w-full bg-secondary rounded-t-sm h-[30%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full bg-error rounded-t-sm h-[40%] opacity-80 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-on-surface-variant mt-1">Sáb</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Payment Methods Donut (Simulated) -->
+<div class="md:col-span-4 bg-surface-container rounded-xl p-md border border-outline-variant flex flex-col">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Métodos de Pago</h3>
+<div class="flex-1 flex flex-col justify-center items-center">
+<!-- Simulated Donut Chart using CSS -->
+<div class="relative w-32 h-32 rounded-full mb-6 flex items-center justify-center" style="background: conic-gradient(from 0deg, #93ccff 0% 45%, #3198dc 45% 75%, #0168a0 75% 90%, #283648 90% 100%);">
+<div class="w-24 h-24 bg-surface-container rounded-full absolute flex flex-col items-center justify-center">
+<span class="text-xs text-on-surface-variant">Top</span>
+<span class="text-lg font-bold text-on-surface">Yape</span>
+</div>
+</div>
+<div class="w-full space-y-2">
+<div class="flex justify-between items-center text-xs">
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="text-on-surface">Yape</span></div>
+<span class="font-utility-mono text-on-surface-variant">45%</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary-container"></span><span class="text-on-surface">Transferencia</span></div>
+<span class="font-utility-mono text-on-surface-variant">30%</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary-container"></span><span class="text-on-surface">Efectivo</span></div>
+<span class="font-utility-mono text-on-surface-variant">15%</span>
+</div>
+<div class="flex justify-between items-center text-xs">
+<div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-surface-variant"></span><span class="text-on-surface">Plin</span></div>
+<span class="font-utility-mono text-on-surface-variant">10%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Transaction Ledger -->
+<div class="md:col-span-12 bg-surface-container rounded-xl border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-high">
+<h3 class="font-headline-md text-headline-md text-on-surface">Registro de Transacciones</h3>
+<div class="flex gap-2">
+<button class="text-xs flex items-center gap-1 border border-outline-variant px-3 py-1.5 rounded hover:bg-surface-variant transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> Filtrar
+                            </button>
+<button class="text-xs flex items-center gap-1 border border-outline-variant px-3 py-1.5 rounded hover:bg-surface-variant transition-colors text-on-surface">
+<span class="material-symbols-outlined text-[16px]">download</span> Exportar
+                            </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse font-body-sm">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant">
+<th class="p-3 text-xs font-label-caps text-on-surface-variant uppercase">Fecha</th>
+<th class="p-3 text-xs font-label-caps text-on-surface-variant uppercase">Concepto</th>
+<th class="p-3 text-xs font-label-caps text-on-surface-variant uppercase">Categoría</th>
+<th class="p-3 text-xs font-label-caps text-on-surface-variant uppercase">Método</th>
+<th class="p-3 text-xs font-label-caps text-on-surface-variant uppercase text-right">Monto</th>
+<th class="p-3 text-xs font-label-caps text-on-surface-variant uppercase text-center">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<!-- Row 1 - Income -->
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer group">
+<td class="p-3 text-on-surface font-utility-mono text-xs">24 Oct, 14:30</td>
+<td class="p-3 text-on-surface font-medium">Troquel Caja Corrugado P.</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-surface-variant text-on-surface-variant">Producción</span>
+</td>
+<td class="p-3 text-on-surface-variant text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">account_balance</span> Transf.
+                                    </td>
+<td class="p-3 text-right font-utility-mono text-secondary font-bold">
+                                        + S/ 450.00
+                                    </td>
+<td class="p-3 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100" onclick="document.getElementById('receipt-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 - Expense -->
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer group">
+<td class="p-3 text-on-surface font-utility-mono text-xs">24 Oct, 11:15</td>
+<td class="p-3 text-on-surface font-medium">Compra Cuchillas de Corte</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-surface-variant text-on-surface-variant">Materiales</span>
+</td>
+<td class="p-3 text-on-surface-variant text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">payments</span> Efectivo
+                                    </td>
+<td class="p-3 text-right font-utility-mono text-error font-medium">
+                                        - S/ 120.00
+                                    </td>
+<td class="p-3 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 - Income -->
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer group">
+<td class="p-3 text-on-surface font-utility-mono text-xs">23 Oct, 16:45</td>
+<td class="p-3 text-on-surface font-medium">Servicio Mantenimiento Troquel</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-surface-variant text-on-surface-variant">Servicios</span>
+</td>
+<td class="p-3 text-on-surface-variant text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">phone_iphone</span> Yape
+                                    </td>
+<td class="p-3 text-right font-utility-mono text-secondary font-bold">
+                                        + S/ 85.00
+                                    </td>
+<td class="p-3 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 - Income -->
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer group">
+<td class="p-3 text-on-surface font-utility-mono text-xs">23 Oct, 09:20</td>
+<td class="p-3 text-on-surface font-medium">Troquel Etiquetas Circulares</td>
+<td class="p-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-surface-variant text-on-surface-variant">Producción</span>
+</td>
+<td class="p-3 text-on-surface-variant text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">phone_iphone</span> Plin
+                                    </td>
+<td class="p-3 text-right font-utility-mono text-secondary font-bold">
+                                        + S/ 150.00
+                                    </td>
+<td class="p-3 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 border-t border-outline-variant bg-surface-container-high flex justify-center">
+<button class="text-sm text-primary hover:text-primary-container transition-colors font-medium">Ver todas las transacciones</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Receipt Modal (Hidden by default) -->
+<div class="fixed inset-0 z-50 hidden" id="receipt-modal">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-background/80 backdrop-blur-sm" onclick="document.getElementById('receipt-modal').classList.add('hidden')"></div>
+<!-- Modal Content -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-surface border border-outline-variant rounded-xl shadow-2xl flex flex-col max-h-[90vh]">
+<div class="flex justify-between items-center p-4 border-b border-outline-variant">
+<h3 class="font-headline-md text-on-surface">Boleta Electrónica</h3>
+<button class="text-on-surface-variant hover:text-error transition-colors" onclick="document.getElementById('receipt-modal').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 overflow-y-auto bg-surface-container font-utility-mono text-sm">
+<!-- Simulated Receipt -->
+<div class="text-center mb-6">
+<h2 class="text-xl font-bold text-on-surface font-body-lg">TroquelMaster S.A.C.</h2>
+<p class="text-on-surface-variant">RUC: 20123456789</p>
+<p class="text-on-surface-variant">Av. Industrial 123, Lima</p>
+<div class="mt-4 border-y border-dashed border-outline-variant py-2">
+<p class="font-bold text-on-surface text-lg">BOLETA DE VENTA ELECTRÓNICA</p>
+<p class="text-on-surface-variant">B001 - 0004523</p>
+</div>
+</div>
+<div class="mb-4 text-on-surface">
+<p><strong>Fecha Emisión:</strong> 24/10/2023 14:30:12</p>
+<p><strong>Cliente:</strong> Industria Papelera SAC</p>
+<p><strong>Moneda:</strong> SOLES (PEN)</p>
+</div>
+<table class="w-full text-left mb-4 text-on-surface">
+<thead class="border-y border-dashed border-outline-variant text-on-surface-variant">
+<tr>
+<th class="py-2 font-normal">CANT</th>
+<th class="py-2 font-normal">DESCRIPCIÓN</th>
+<th class="py-2 font-normal text-right">TOTAL</th>
+</tr>
+</thead>
+<tbody class="border-b border-dashed border-outline-variant">
+<tr>
+<td class="py-2 align-top">1.00</td>
+<td class="py-2">Troquel Caja Corrugado P.<br/><span class="text-xs text-on-surface-variant">Medidas: 40x30x20 cm</span></td>
+<td class="py-2 text-right align-top">450.00</td>
+</tr>
+</tbody>
+</table>
+<div class="flex flex-col items-end gap-1 mb-6 text-on-surface">
+<div class="w-48 flex justify-between">
+<span>OP. GRAVADA:</span>
+<span>S/ 381.36</span>
+</div>
+<div class="w-48 flex justify-between">
+<span>IGV (18%):</span>
+<span>S/ 68.64</span>
+</div>
+<div class="w-48 flex justify-between font-bold text-lg mt-2 border-t border-outline-variant pt-1">
+<span>TOTAL:</span>
+<span>S/ 450.00</span>
+</div>
+</div>
+<div class="text-center mb-6">
+<p class="text-on-surface-variant text-xs mb-2">Representación impresa de la Boleta Electrónica.</p>
+<!-- Simulated QR Code -->
+<div class="inline-block p-2 bg-white rounded">
+<div 0="" 100="" 100\"="" class="w-24 h-24 bg-black" style="mask-image: url('data:image/svg+xml;utf8,&lt;svg viewBox=\" xmlns='\"http://www.w3.org/2000/svg\"'><rect fill='\"white\"/' height='\"100\"' width='\"100\"'><path d='\"M10,10' fill='\"black\"/' h-10="" h-20="" h-30="" h10="" h20="" h30="" m10,50="" m10,60="" m20,20="" m20,70="" m50,50="" m50,70="" m60,10="" m70,20="" m70,60="" m80,80="" v10="" v20="" v30="" z="" z\"="">'); -webkit-mask-image: url('data:image/svg+xml;utf8,<svg 0="" 100="" 100\"="" viewbox='\"0' xmlns='\"http://www.w3.org/2000/svg\"'><rect fill='\"white\"/' height='\"100\"' width='\"100\"'><path d='\"M10,10' fill='\"black\"/' h-10="" h-20="" h-30="" h10="" h20="" h30="" m10,50="" m10,60="" m20,20="" m20,70="" m50,50="" m50,70="" m60,10="" m70,20="" m70,60="" m80,80="" v10="" v20="" v30="" z="" z\"=""></path></rect></svg>');"&gt;</path></rect></div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-outline-variant bg-surface flex justify-end gap-3 rounded-b-xl">
+<button class="px-4 py-2 text-on-surface-variant font-medium hover:bg-surface-variant rounded transition-colors" onclick="document.getElementById('receipt-modal').classList.add('hidden')">Cerrar</button>
+<button class="px-4 py-2 bg-primary text-on-primary font-medium hover:bg-primary-container rounded transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">print</span> Imprimir
+                 </button>
+</div>
+</div>
+</div>
+</body></html>

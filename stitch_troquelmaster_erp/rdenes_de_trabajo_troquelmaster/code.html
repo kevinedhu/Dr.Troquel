@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TroquelMaster - Trabajos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .table-row-hover:hover {
+            background-color: rgba(2, 132, 199, 0.1); /* Industrial Blue transparent */
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ffb4ab",
+                      "on-tertiary": "#472a00",
+                      "on-secondary-fixed": "#001d32",
+                      "on-surface-variant": "#bfc7d2",
+                      "secondary-fixed": "#cde5ff",
+                      "surface-bright": "#2c3a4d",
+                      "secondary": "#94ccff",
+                      "tertiary-container": "#ca8100",
+                      "on-tertiary-fixed": "#2a1700",
+                      "surface-container-lowest": "#010f20",
+                      "secondary-container": "#0168a0",
+                      "primary-fixed": "#cce5ff",
+                      "surface-container-high": "#1d2b3d",
+                      "inverse-on-surface": "#233144",
+                      "surface-variant": "#283648",
+                      "surface-container": "#122032",
+                      "inverse-surface": "#d5e3fc",
+                      "surface-container-highest": "#283648",
+                      "on-background": "#d5e3fc",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "on-secondary-container": "#c9e3ff",
+                      "surface-container-low": "#0d1c2e",
+                      "tertiary": "#ffb95f",
+                      "background": "#051425",
+                      "on-error": "#690005",
+                      "secondary-fixed-dim": "#94ccff",
+                      "tertiary-fixed": "#ffddb8",
+                      "outline": "#89929b",
+                      "surface": "#051425",
+                      "on-primary-container": "#002c47",
+                      "surface-tint": "#93ccff",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "on-primary-fixed": "#001d31",
+                      "surface-dim": "#051425",
+                      "error-container": "#93000a",
+                      "on-primary": "#003351",
+                      "primary": "#93ccff",
+                      "inverse-primary": "#006398",
+                      "on-secondary-fixed-variant": "#004b74",
+                      "on-tertiary-container": "#3e2400",
+                      "on-secondary": "#003352",
+                      "on-surface": "#d5e3fc",
+                      "on-primary-fixed-variant": "#004b73",
+                      "primary-container": "#3198dc",
+                      "primary-fixed-dim": "#93ccff",
+                      "outline-variant": "#3f4850"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "xs": "4px",
+                      "lg": "24px",
+                      "gutter": "16px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "base": "4px",
+                      "container-margin": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "utility-mono": ["monospace"],
+                      "label-caps": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "display-metrics": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "utility-mono": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "display-metrics": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-lg antialiased min-h-screen">
+<!-- SideNavBar -->
+<nav class="bg-surface-container dark:bg-surface-container h-screen w-64 fixed left-0 top-0 border-r border-outline-variant dark:border-outline-variant flex flex-col h-full p-md z-50">
+<div class="mb-xl px-sm">
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary">TroquelMaster</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Gestión de Troqueles</p>
+</div>
+<ul class="flex-1 space-y-sm">
+<li>
+<a class="flex items-center p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="dashboard">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="font-body-sm text-body-sm">Cotizador / Escáner</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-sm rounded-lg bg-secondary-container text-on-secondary-container font-bold active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-body-sm text-body-sm">Trabajos</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="groups">groups</span>
+<span class="font-body-sm text-body-sm">Clientes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-sm text-body-sm">Almacén</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="payments">payments</span>
+<span class="font-body-sm text-body-sm">Caja</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="analytics">analytics</span>
+<span class="font-body-sm text-body-sm">Reportes</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="payments">payments</span>
+<span class="font-body-sm text-body-sm">Tarifas</span>
+</a>
+</li>
+<li>
+<a class="flex items-center p-sm rounded-lg text-on-surface-variant hover:bg-surface-variant hover:text-on-surface-variant transition-colors duration-200 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="settings">settings</span>
+<span class="font-body-sm text-body-sm">Configuración</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant docked full-width top-0 sticky z-40 flex justify-between items-center h-16 px-lg ml-64">
+<div class="flex items-center">
+<h2 class="font-headline-md text-headline-md font-bold text-primary mr-lg">TroquelMaster</h2>
+</div>
+<div class="flex items-center space-x-md">
+<span class="font-body-sm text-body-sm text-on-surface-variant">24 Oct 2023</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-sm rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-sm rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer p-sm rounded-full hover:bg-surface-variant">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-lg">
+<!-- Header & Controls -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Órdenes de Trabajo</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">Gestión y seguimiento de producción de troqueles.</p>
+</div>
+<div class="flex flex-wrap gap-sm items-center w-full md:w-auto">
+<div class="relative w-full md:w-64">
+<span class="material-symbols-outlined absolute left-sm top-1/2 transform -translate-y-1/2 text-on-surface-variant pointer-events-none" data-icon="search">search</span>
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg pl-xl pr-sm py-sm font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-shadow" placeholder="Buscar código o cliente..." type="text"/>
+</div>
+<select class="bg-surface-container border border-outline-variant rounded-lg px-sm py-sm font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+<option value="">Estado: Todos</option>
+<option value="cola">En cola</option>
+<option value="corte">En corte</option>
+<option value="armado">En armado</option>
+<option value="listo">Listo</option>
+</select>
+<select class="bg-surface-container border border-outline-variant rounded-lg px-sm py-sm font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+<option value="">Tipo: Todos</option>
+<option value="plano">Plano</option>
+<option value="rotativo">Rotativo</option>
+<option value="especial">Especial</option>
+</select>
+<button class="bg-primary text-on-primary font-body-sm text-body-sm font-bold px-md py-sm rounded-lg hover:bg-primary-container transition-colors shadow-sm flex items-center">
+<span class="material-symbols-outlined mr-xs text-[18px]" data-icon="add">add</span>
+                    Nuevo Trabajo
+                </button>
+</div>
+</div>
+<!-- Data Table Container (Level 1 Panel) -->
+<div class="bg-[#1E293B] border border-[#334155] rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant">
+<th class="font-label-caps text-label-caps text-on-surface-variant p-md uppercase">Código</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-md uppercase">Cliente</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-md uppercase">Tipo</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-md uppercase">Fecha Sol.</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-md uppercase">Metros</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-md uppercase">Total</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-md uppercase">Estado</th>
+<th class="font-label-caps text-label-caps text-on-surface-variant p-md uppercase text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="font-utility-mono text-utility-mono text-on-surface">
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant table-row-hover transition-colors">
+<td class="p-md font-bold text-primary">TRQ-2026-001</td>
+<td class="p-md font-body-sm text-body-sm">Ind. Gráficas S.A.</td>
+<td class="p-md">Plano</td>
+<td class="p-md">24/10/23</td>
+<td class="p-md">12.5</td>
+<td class="p-md">$450.00</td>
+<td class="p-md">
+<span class="inline-block bg-[#0284C7] text-white font-label-caps text-[10px] px-2 py-1 rounded-sm uppercase tracking-wider">En corte</span>
+</td>
+<td class="p-md text-right space-x-xs">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs" title="Ver Detalle">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs" title="Generar QR">
+<span class="material-symbols-outlined text-[20px]" data-icon="qr_code_2">qr_code_2</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant bg-surface-container-low table-row-hover transition-colors">
+<td class="p-md font-bold text-primary">TRQ-2026-002</td>
+<td class="p-md font-body-sm text-body-sm">Cartones del Sur</td>
+<td class="p-md">Rotativo</td>
+<td class="p-md">23/10/23</td>
+<td class="p-md">8.0</td>
+<td class="p-md">$320.50</td>
+<td class="p-md">
+<span class="inline-block bg-[#22C55E] text-white font-label-caps text-[10px] px-2 py-1 rounded-sm uppercase tracking-wider">Listo</span>
+</td>
+<td class="p-md text-right space-x-xs">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs" title="Ver Detalle">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs" title="Generar QR">
+<span class="material-symbols-outlined text-[20px]" data-icon="qr_code_2">qr_code_2</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-outline-variant table-row-hover transition-colors">
+<td class="p-md font-bold text-primary">TRQ-2026-003</td>
+<td class="p-md font-body-sm text-body-sm">Empaques R&amp;M</td>
+<td class="p-md">Plano</td>
+<td class="p-md">25/10/23</td>
+<td class="p-md">24.2</td>
+<td class="p-md">$890.00</td>
+<td class="p-md">
+<span class="inline-block bg-[#64748B] text-white font-label-caps text-[10px] px-2 py-1 rounded-sm uppercase tracking-wider">En cola</span>
+</td>
+<td class="p-md text-right space-x-xs">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs" title="Ver Detalle">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs" title="Generar QR">
+<span class="material-symbols-outlined text-[20px]" data-icon="qr_code_2">qr_code_2</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="border-b border-outline-variant bg-surface-container-low table-row-hover transition-colors">
+<td class="p-md font-bold text-primary">TRQ-2026-004</td>
+<td class="p-md font-body-sm text-body-sm">Litografía Express</td>
+<td class="p-md">Especial</td>
+<td class="p-md">22/10/23</td>
+<td class="p-md">5.5</td>
+<td class="p-md">$210.00</td>
+<td class="p-md">
+<span class="inline-block bg-tertiary-container text-on-tertiary-container font-label-caps text-[10px] px-2 py-1 rounded-sm uppercase tracking-wider">En armado</span>
+</td>
+<td class="p-md text-right space-x-xs">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs" title="Ver Detalle">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-xs" title="Generar QR">
+<span class="material-symbols-outlined text-[20px]" data-icon="qr_code_2">qr_code_2</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-sm border-t border-outline-variant bg-surface-container text-right">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Mostrando 4 de 128 registros</span>
+</div>
+</div>
+</main>
+</body></html>

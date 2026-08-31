@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+troquelmaster-app/node_modules/
+
+# Production build
+dist/
+troquelmaster-app/dist/
+
+# IDE / Temp
+.vscode/
+.idea/
+.gemini/
+*.log
+.DS_Store
