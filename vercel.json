@@ -1,8 +1,10 @@
 {
+  "buildCommand": "cd troquelmaster-app && npm run build",
+  "outputDirectory": "troquelmaster-app/dist",
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/troquelmaster-app/index.html"
+      "destination": "/index.html"
     }
   ]
 }
