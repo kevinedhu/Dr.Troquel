@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/troquelmaster-app/index.html"
+    }
+  ]
+}
