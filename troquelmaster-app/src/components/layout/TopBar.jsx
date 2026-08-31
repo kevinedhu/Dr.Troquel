@@ -1,104 +1,81 @@
 import { useLocation } from 'react-router-dom';
 
 const pageTitles = {
-  '/': null,
-  '/cotizador': 'Cotización Nueva',
-  '/trabajos': null,
-  '/clientes': 'Clientes',
-  '/almacen': null,
-  '/caja': null,
-  '/reportes': 'Reportes',
-  '/tarifas': 'Tarifas',
+  '/': 'Dashboard',
+  '/cotizador': 'Cotizador / Escáner',
+  '/trabajos': 'Órdenes de Trabajo',
+  '/clientes': 'Directorio de Clientes',
+  '/almacen': 'Inventario de Insumos',
+  '/caja': 'Caja / Balance',
+  '/reportes': 'Reportes y Analítica',
+  '/tarifas': 'Tarifas de Servicios',
   '/configuracion': 'Configuración Sistema',
 };
 
-export default function TopBar() {
+export default function TopBar({ isMobile, onToggleMobileMenu }) {
   const location = useLocation();
-  const pageTitle = pageTitles[location.pathname];
+  const pageTitle = pageTitles[location.pathname] || 'TroquelMaster';
 
   const today = new Date();
-  const dateStr = today.toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' });
+  const dateStr = today.toLocaleDateString('es-PE', { day: '2-digit', month: 'short' });
 
   return (
     <header
       style={{
-        height: 64,
+        height: isMobile ? 56 : 64,
         backgroundColor: 'var(--surface)',
         borderBottom: '1px solid var(--outline-variant)',
         display: 'flex',
-        justifyContent: 'space-between',
+        justify: 'space-between',
         alignItems: 'center',
-        padding: '0 var(--space-lg)',
+        padding: isMobile ? '0 12px' : '0 var(--space-lg)',
         position: 'sticky',
         top: 0,
         zIndex: 40,
         flexShrink: 0,
       }}
     >
-      {/* Left Side */}
-      <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-        {pageTitle ? (
-          <span className="text-headline-md" style={{ fontWeight: 700, color: 'var(--primary)' }}>
-            {pageTitle}
-          </span>
-        ) : (
-          <div style={{ position: 'relative', width: 256 }}>
-            <span
-              className="material-symbols-outlined"
-              style={{
-                position: 'absolute',
-                left: 12,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                color: 'var(--on-surface-variant)',
-                fontSize: 18,
-              }}
-            >
-              search
-            </span>
-            <input
-              type="text"
-              placeholder="Buscar trabajos, clientes..."
-              className="input-field"
-              style={{
-                borderRadius: 'var(--radius-full)',
-                paddingLeft: 36,
-                paddingTop: 6,
-                paddingBottom: 6,
-                fontSize: 14,
-                backgroundColor: 'var(--surface-container)',
-              }}
-            />
-          </div>
-        )}
-      </div>
-
-      {/* Right Side Actions */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)' }}>
-        <span className="text-utility-mono" style={{ color: 'var(--on-surface-variant)' }}>
-          {dateStr}
-        </span>
-        {['notifications', 'settings_suggest', 'account_circle'].map((icon) => (
+      {/* Left Side (Hamburger icon on mobile + Page Title) */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        {isMobile && (
           <button
-            key={icon}
+            onClick={onToggleMobileMenu}
             style={{
               background: 'none',
               border: 'none',
-              color: 'var(--on-surface-variant)',
+              color: 'var(--primary)',
               cursor: 'pointer',
-              padding: 4,
-              borderRadius: '50%',
               display: 'flex',
-              transition: 'color 0.2s ease',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 4,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--primary)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--on-surface-variant)')}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: icon === 'account_circle' ? 28 : 24 }}>
-              {icon}
-            </span>
+            <span className="material-symbols-outlined" style={{ fontSize: 26 }}>menu</span>
           </button>
-        ))}
+        )}
+        <span className="text-headline-md" style={{ fontWeight: 700, color: 'var(--primary)', fontSize: isMobile ? 17 : 20 }}>
+          {pageTitle}
+        </span>
+      </div>
+
+      {/* Right Side Date */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span className="text-utility-mono" style={{ color: 'var(--on-surface-variant)', fontSize: isMobile ? 11 : 13 }}>
+          {dateStr}
+        </span>
+        <button
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--on-surface-variant)',
+            cursor: 'pointer',
+            padding: 4,
+            display: 'flex',
+          }}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 22 }}>account_circle</span>
+        </button>
       </div>
     </header>
   );

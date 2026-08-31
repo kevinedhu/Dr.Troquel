@@ -193,8 +193,8 @@ body {
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--surface);
@@ -225,16 +225,6 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* ── Ghost Border ── */
-.ghost-border {
-  border: 1px solid transparent;
-  transition: border-color 0.2s ease;
-}
-.ghost-border:hover,
-.ghost-border:focus-within {
-  border-color: var(--outline-variant);
-}
-
 /* ── Status Badges ── */
 .badge {
   display: inline-flex;
@@ -251,41 +241,13 @@ body {
   white-space: nowrap;
 }
 
-.badge-cutting {
-  background-color: var(--industrial-blue);
-  color: #ffffff;
-}
-
-.badge-ready {
-  background-color: var(--success-green);
-  color: #ffffff;
-}
-
-.badge-queued {
-  background-color: var(--steel-gray);
-  color: #ffffff;
-}
-
-.badge-maintenance,
-.badge-armado {
-  background-color: var(--tertiary-container);
-  color: var(--on-tertiary-container);
-}
-
-.badge-critical {
-  background-color: var(--error-container);
-  color: var(--on-error-container);
-}
-
-.badge-optimal {
-  background-color: rgba(34, 197, 94, 0.2);
-  color: #ffffff;
-}
-
-.badge-reorder {
-  background-color: rgba(234, 179, 8, 0.2);
-  color: #000000;
-}
+.badge-cutting { background-color: var(--industrial-blue); color: #ffffff; }
+.badge-ready { background-color: var(--success-green); color: #ffffff; }
+.badge-queued { background-color: var(--steel-gray); color: #ffffff; }
+.badge-maintenance, .badge-armado { background-color: var(--tertiary-container); color: var(--on-tertiary-container); }
+.badge-critical { background-color: var(--error-container); color: var(--on-error-container); }
+.badge-optimal { background-color: rgba(34, 197, 94, 0.2); color: #ffffff; }
+.badge-reorder { background-color: rgba(234, 179, 8, 0.2); color: #000000; }
 
 /* ── Industrial Data Tables ── */
 .table-industrial {
@@ -334,7 +296,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 24px;
+  padding: 10px 20px;
   background-color: var(--primary);
   color: var(--on-primary);
   font-family: 'Inter', sans-serif;
@@ -358,7 +320,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   background-color: transparent;
   color: var(--on-surface);
   font-family: 'Inter', sans-serif;
@@ -397,71 +359,10 @@ body {
   box-shadow: 0 0 0 2px rgba(147, 204, 255, 0.2);
 }
 
-.input-field::placeholder {
-  color: var(--outline);
-}
-
-/* ── Viewer Grid (Cotizador) ── */
-.viewer-grid {
-  background-image:
-    linear-gradient(var(--surface-variant) 1px, transparent 1px),
-    linear-gradient(90deg, var(--surface-variant) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position: center center;
-}
-
-/* ── Glass Card ── */
-.glass-card {
-  background-color: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
-}
-
-/* ── Progress Bar ── */
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background-color: var(--surface-variant);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  border-radius: var(--radius-full);
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 /* ── Link Reset ── */
 a {
   text-decoration: none;
   color: inherit;
-}
-
-/* ── Utility ── */
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* ── Animations ── */
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 15px rgba(147, 204, 255, 0.3); }
-  50% { box-shadow: 0 0 25px rgba(147, 204, 255, 0.5); }
-}
-
-@keyframes subtle-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-subtle-pulse {
-  animation: subtle-pulse 2s ease-in-out infinite;
 }
 
 /* ── Checkbox Custom ── */
@@ -494,10 +395,6 @@ input[type="checkbox"]:checked::after {
   font-weight: 700;
 }
 
-input[type="checkbox"]:focus {
-  box-shadow: 0 0 0 2px rgba(147, 204, 255, 0.3);
-}
-
 /* ── Select Custom ── */
 select {
   appearance: none;
@@ -507,28 +404,35 @@ select {
   padding-right: 32px !important;
 }
 
-/* ── Toast ── */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background-color: var(--surface-variant);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius-default);
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  z-index: 100;
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-}
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE MEDIA QUERIES (MOBILE CELL PHONE OPTIMIZATION)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+  }
 
-.toast.visible {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
+  .text-headline-lg {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  /* Grid layout responsive collapses */
+  div[style*="gridTemplateColumns"],
+  div[style*="grid-template-columns"] {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  /* Tables horizontal scrolling touch momentum */
+  div[style*="overflowX: auto"],
+  div[style*="overflow-x: auto"] {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Form modal dialogs fit screen width */
+  div[style*="maxWidth"],
+  div[style*="max-width"] {
+    max-width: 95vw !important;
+  }
 }
