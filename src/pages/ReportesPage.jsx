@@ -11,9 +11,16 @@ const pageVariants = {
 };
 
 export default function ReportesPage() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [period, setPeriod] = useState('Este Mes');
   const [trabajos, setTrabajos] = useState([]);
   const [movements, setMovements] = useState([]);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const refreshReportData = () => {
     setTrabajos(getTrabajos());
@@ -96,7 +103,7 @@ export default function ReportesPage() {
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { labels: { color: '#89929b', font: { family: 'Inter', size: 12 } } } },
+          plugins: { legend: { labels: { color: '#89929b', font: { family: 'Inter', size: 11 } } } },
           scales: {
             y: { grid: { color: '#283648' }, ticks: { color: '#89929b', callback: v => 'S/. ' + v } },
             x: { grid: { display: false }, ticks: { color: '#89929b' } },
@@ -105,14 +112,14 @@ export default function ReportesPage() {
       });
     }
 
-    // Material Consumption vs Services Bar Chart
+    // Balance Chart
     if (barChartRef.current) {
       const ctx2 = barChartRef.current.getContext('2d');
       if (barChartInstance.current) barChartInstance.current.destroy();
       barChartInstance.current = new Chart(ctx2, {
         type: 'bar',
         data: {
-          labels: ['Ingresos Cobrados', 'Gastos Insumos', 'Ganancia Neta'],
+          labels: ['Ventas', 'Gastos', 'Ganancia'],
           datasets: [{
             label: 'Monto S/.',
             data: [totalVentasRealizadas, totalGastoInsumos, Math.max(0, gananciaNeta)],
@@ -139,21 +146,28 @@ export default function ReportesPage() {
   }, [totalVentasRealizadas, totalGastoInsumos, gananciaNeta, period]);
 
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate">
+    <motion.div variants={pageVariants} initial="initial" animate="animate" style={{ paddingBottom: 16 }}>
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-xl)', flexWrap: 'wrap', gap: 16 }}>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginBottom: isMobile ? 12 : 'var(--space-xl)',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: 12,
+      }}>
         <div>
-          <h1 className="text-headline-lg" style={{ color: 'var(--on-surface)' }}>Reportes y Analítica Dinámica</h1>
-          <p className="text-body-sm" style={{ color: 'var(--on-surface-variant)', marginTop: 4 }}>
-            Reportes actualizados en tiempo real según los trabajos registrados y gastos de insumos.
+          <h1 className="text-headline-lg" style={{ color: 'var(--on-surface)' }}>Reportes y Analítica</h1>
+          <p className="text-body-sm" style={{ color: 'var(--on-surface-variant)', marginTop: 2 }}>
+            Finanzas y rendimiento de producción en tiempo real.
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', width: isMobile ? '100%' : 'auto' }}>
           <select
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
             className="input-field"
-            style={{ width: 'auto', backgroundColor: 'var(--surface-container)', borderRadius: 8, padding: '8px 32px 8px 8px' }}
+            style={{ flex: 1, backgroundColor: 'var(--surface-container)', borderRadius: 8, padding: '6px 28px 6px 8px', minHeight: 40, fontSize: 13 }}
           >
             <option>Hoy</option>
             <option>Esta Semana</option>
@@ -163,11 +177,11 @@ export default function ReportesPage() {
           {(trabajos.length > 0 || movements.length > 0) && (
             <button
               className="btn-secondary"
-              style={{ borderRadius: 8, padding: '8px 12px', fontSize: 13, color: 'var(--error)', borderColor: 'var(--error)' }}
+              style={{ borderRadius: 8, padding: '8px 12px', fontSize: 12, color: 'var(--error)', borderColor: 'var(--error)', minHeight: 40 }}
               onClick={handleClearAll}
               title="Limpiar datos de reportes"
             >
-              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>delete_sweep</span>
+              <span className="material-symbols-outlined" style={{ fontSize: 16 }}>delete_sweep</span>
               Limpiar
             </button>
           )}
@@ -175,52 +189,62 @@ export default function ReportesPage() {
       </div>
 
       {/* KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'var(--space-md)', marginBottom: 'var(--space-xl)' }}>
-        <div className="card-level-1" style={{ padding: 'var(--space-md)' }}>
-          <div className="text-body-sm" style={{ color: 'var(--on-surface-variant)' }}>Ventas Realizadas (Cobradas)</div>
-          <div style={{ fontSize: 26, fontWeight: 700, color: '#22c55e', fontFamily: 'Inter', margin: '4px 0' }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+        gap: isMobile ? 8 : 'var(--space-md)',
+        marginBottom: isMobile ? 12 : 'var(--space-xl)',
+      }}>
+        <div className="card-level-1" style={{ padding: isMobile ? 10 : 'var(--space-md)' }}>
+          <div className="text-body-sm" style={{ color: 'var(--on-surface-variant)', fontSize: 11 }}>Ventas Cobradas</div>
+          <div style={{ fontSize: isMobile ? 18 : 24, fontWeight: 700, color: '#22c55e', fontFamily: 'Inter', margin: '2px 0' }}>
             S/. {totalVentasRealizadas.toFixed(2)}
           </div>
-          <div style={{ fontSize: 11, color: 'var(--on-surface-variant)' }}>{completedJobs.length} órdenes completadas</div>
+          <div style={{ fontSize: 10, color: 'var(--on-surface-variant)' }}>{completedJobs.length} órdenes listas</div>
         </div>
 
-        <div className="card-level-1" style={{ padding: 'var(--space-md)' }}>
-          <div className="text-body-sm" style={{ color: 'var(--on-surface-variant)' }}>Gasto Total en Insumos</div>
-          <div style={{ fontSize: 26, fontWeight: 700, color: 'var(--error)', fontFamily: 'Inter', margin: '4px 0' }}>
+        <div className="card-level-1" style={{ padding: isMobile ? 10 : 'var(--space-md)' }}>
+          <div className="text-body-sm" style={{ color: 'var(--on-surface-variant)', fontSize: 11 }}>Gasto en Insumos</div>
+          <div style={{ fontSize: isMobile ? 18 : 24, fontWeight: 700, color: 'var(--error)', fontFamily: 'Inter', margin: '2px 0' }}>
             S/. {totalGastoInsumos.toFixed(2)}
           </div>
-          <div style={{ fontSize: 11, color: 'var(--on-surface-variant)' }}>{movements.length} egresos/compras</div>
+          <div style={{ fontSize: 10, color: 'var(--on-surface-variant)' }}>{movements.length} compras/egresos</div>
         </div>
 
-        <div className="card-level-1" style={{ padding: 'var(--space-md)' }}>
-          <div className="text-body-sm" style={{ color: 'var(--on-surface-variant)' }}>Ganancia Neta Estimada</div>
-          <div style={{ fontSize: 26, fontWeight: 700, color: 'var(--primary)', fontFamily: 'Inter', margin: '4px 0' }}>
+        <div className="card-level-1" style={{ padding: isMobile ? 10 : 'var(--space-md)' }}>
+          <div className="text-body-sm" style={{ color: 'var(--on-surface-variant)', fontSize: 11 }}>Ganancia Neta</div>
+          <div style={{ fontSize: isMobile ? 18 : 24, fontWeight: 700, color: 'var(--primary)', fontFamily: 'Inter', margin: '2px 0' }}>
             S/. {gananciaNeta.toFixed(2)}
           </div>
-          <div style={{ fontSize: 11, color: gananciaNeta >= 0 ? '#22c55e' : 'var(--error)' }}>
-            {gananciaNeta >= 0 ? 'Ventas netas positivas' : 'Balance en gasto inicial'}
+          <div style={{ fontSize: 10, color: gananciaNeta >= 0 ? '#22c55e' : 'var(--error)' }}>
+            {gananciaNeta >= 0 ? 'Margen positivo' : 'Inversión inicial'}
           </div>
         </div>
 
-        <div className="card-level-1" style={{ padding: 'var(--space-md)' }}>
-          <div className="text-body-sm" style={{ color: 'var(--on-surface-variant)' }}>Órdenes Totales / Pendientes</div>
-          <div style={{ fontSize: 26, fontWeight: 700, color: 'var(--on-surface)', fontFamily: 'Inter', margin: '4px 0' }}>
-            {trabajos.length} <span style={{ fontSize: 16, color: 'var(--tertiary)' }}>({pendingJobs.length} en cola)</span>
+        <div className="card-level-1" style={{ padding: isMobile ? 10 : 'var(--space-md)' }}>
+          <div className="text-body-sm" style={{ color: 'var(--on-surface-variant)', fontSize: 11 }}>Órdenes Totales</div>
+          <div style={{ fontSize: isMobile ? 18 : 24, fontWeight: 700, color: 'var(--on-surface)', fontFamily: 'Inter', margin: '2px 0' }}>
+            {trabajos.length} <span style={{ fontSize: 13, color: 'var(--tertiary)' }}>({pendingJobs.length} cola)</span>
           </div>
-          <div style={{ fontSize: 11, color: 'var(--on-surface-variant)' }}>Metros totales: {totalMeters.toFixed(1)} m</div>
+          <div style={{ fontSize: 10, color: 'var(--on-surface-variant)' }}>{totalMeters.toFixed(1)} m lineales</div>
         </div>
       </div>
 
       {/* Charts */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-lg)', marginBottom: 'var(--space-xl)' }}>
-        <div className="card-level-1" style={{ padding: 'var(--space-lg)', height: 320, display: 'flex', flexDirection: 'column' }}>
-          <h3 className="text-headline-md" style={{ color: 'var(--on-surface)', marginBottom: 16 }}>Comparativa Ventas vs Gastos de Insumos</h3>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: isMobile ? 10 : 'var(--space-lg)',
+        marginBottom: isMobile ? 12 : 'var(--space-xl)',
+      }}>
+        <div className="card-level-1" style={{ padding: isMobile ? 12 : 'var(--space-lg)', height: isMobile ? 260 : 320, display: 'flex', flexDirection: 'column' }}>
+          <h3 className="text-headline-md" style={{ color: 'var(--on-surface)', marginBottom: 10, fontSize: 14 }}>Ventas vs Gastos</h3>
           <div style={{ flex: 1, position: 'relative' }}>
             <canvas ref={lineChartRef} />
           </div>
         </div>
-        <div className="card-level-1" style={{ padding: 'var(--space-lg)', height: 320, display: 'flex', flexDirection: 'column' }}>
-          <h3 className="text-headline-md" style={{ color: 'var(--on-surface)', marginBottom: 16 }}>Balance Financiero</h3>
+        <div className="card-level-1" style={{ padding: isMobile ? 12 : 'var(--space-lg)', height: isMobile ? 260 : 320, display: 'flex', flexDirection: 'column' }}>
+          <h3 className="text-headline-md" style={{ color: 'var(--on-surface)', marginBottom: 10, fontSize: 14 }}>Balance Financiero</h3>
           <div style={{ flex: 1, position: 'relative' }}>
             <canvas ref={barChartRef} />
           </div>
@@ -229,40 +253,42 @@ export default function ReportesPage() {
 
       {/* Breakdown by Service Table */}
       <div className="card-level-1" style={{ overflow: 'hidden' }}>
-        <div style={{ padding: 16, borderBottom: '1px solid var(--outline-variant)', backgroundColor: 'var(--surface-container-high)' }}>
-          <h3 className="text-headline-md" style={{ color: 'var(--on-surface)' }}>Desglose de Producción por Tipo de Servicio</h3>
+        <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--outline-variant)', backgroundColor: 'var(--surface-container-high)' }}>
+          <h3 className="text-headline-md" style={{ color: 'var(--on-surface)', fontSize: 14 }}>Desglose de Producción por Servicio</h3>
         </div>
-        <table className="table-industrial">
-          <thead>
-            <tr>
-              <th>Tipo de Servicio</th>
-              <th style={{ textAlign: 'center' }}>Órdenes Totales</th>
-              <th style={{ textAlign: 'center' }}>Completadas</th>
-              <th style={{ textAlign: 'center' }}>Unidades</th>
-              <th style={{ textAlign: 'center' }}>Metros (m)</th>
-              <th style={{ textAlign: 'right' }}>Total Generado (S/.)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {serviceBreakdown.map(row => (
-              <tr key={row.name}>
-                <td style={{ fontWeight: 600, color: 'var(--on-surface)' }}>{row.name}</td>
-                <td className="text-utility-mono" style={{ textAlign: 'center' }}>{row.totalOrders}</td>
-                <td className="text-utility-mono" style={{ textAlign: 'center', color: '#22c55e', fontWeight: 700 }}>{row.completedOrders}</td>
-                <td className="text-utility-mono" style={{ textAlign: 'center' }}>{row.units} un.</td>
-                <td className="text-utility-mono" style={{ textAlign: 'center' }}>{row.meters} m</td>
-                <td className="text-utility-mono" style={{ textAlign: 'right', fontWeight: 700, color: 'var(--secondary)' }}>S/. {row.subtotal}</td>
-              </tr>
-            ))}
-            {serviceBreakdown.length === 0 && (
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <table className="table-industrial" style={{ minWidth: isMobile ? 540 : '100%' }}>
+            <thead>
               <tr>
-                <td colSpan="6" style={{ padding: 40, textAlign: 'center', color: 'var(--on-surface-variant)' }}>
-                  No hay trabajos ni servicios registrados aún en el sistema.
-                </td>
+                <th>Servicio</th>
+                <th style={{ textAlign: 'center' }}>Órdenes</th>
+                <th style={{ textAlign: 'center' }}>Completadas</th>
+                <th style={{ textAlign: 'center' }}>Unidades</th>
+                <th style={{ textAlign: 'center' }}>Metros</th>
+                <th style={{ textAlign: 'right' }}>Total (S/.)</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {serviceBreakdown.map(row => (
+                <tr key={row.name}>
+                  <td style={{ fontWeight: 600, color: 'var(--on-surface)', fontSize: 13 }}>{row.name}</td>
+                  <td className="text-utility-mono" style={{ textAlign: 'center' }}>{row.totalOrders}</td>
+                  <td className="text-utility-mono" style={{ textAlign: 'center', color: '#22c55e', fontWeight: 700 }}>{row.completedOrders}</td>
+                  <td className="text-utility-mono" style={{ textAlign: 'center' }}>{row.units} un.</td>
+                  <td className="text-utility-mono" style={{ textAlign: 'center' }}>{row.meters} m</td>
+                  <td className="text-utility-mono" style={{ textAlign: 'right', fontWeight: 700, color: 'var(--secondary)' }}>S/. {row.subtotal}</td>
+                </tr>
+              ))}
+              {serviceBreakdown.length === 0 && (
+                <tr>
+                  <td colSpan="6" style={{ padding: 32, textAlign: 'center', color: 'var(--on-surface-variant)' }}>
+                    No hay trabajos ni servicios registrados aún en el sistema.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </motion.div>
   );

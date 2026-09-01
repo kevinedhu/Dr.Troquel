@@ -17,6 +17,13 @@ export default function DashboardPage() {
   const navigate = useNavigate();
   const [trabajos, setTrabajos] = useState([]);
   const [clientes, setClientes] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const refreshDashboardData = () => {
     setTrabajos(getTrabajos());
@@ -182,17 +189,27 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Metric Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 'var(--space-md)', marginBottom: 'var(--space-xl)' }}>
-        <MetricCard label="Ventas Realizadas" value={`S/. ${totalVentas.toFixed(2)}`} icon="payments" iconColor="var(--secondary)" subtitle={`${numCompletados} cobrados`} trendIcon="trending_up" index={0} />
-        <MetricCard label="Completados" value={numCompletados} icon="check_circle" iconColor="var(--secondary)" subtitle="Trabajos listos" index={1} />
-        <MetricCard label="Pendientes (En cola)" value={enCola} icon="schedule" iconColor="var(--tertiary)" subtitle="En espera de pago/entrega" index={2} />
-        <MetricCard label="Clientes Activos" value={clientes.length} icon="groups" iconColor="var(--secondary)" subtitle="En directorio" index={3} />
+      {/* Metric Cards — 5 col desktop, 2 col mobile */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)',
+        gap: isMobile ? 8 : 'var(--space-md)',
+        marginBottom: 'var(--space-xl)',
+      }}>
+        <MetricCard label="Ventas" value={`S/. ${totalVentas.toFixed(2)}`} icon="payments" iconColor="var(--secondary)" subtitle={`${numCompletados} cobrados`} trendIcon="trending_up" index={0} />
+        <MetricCard label="Completados" value={numCompletados} icon="check_circle" iconColor="var(--secondary)" subtitle="Listos" index={1} />
+        <MetricCard label="En Cola" value={enCola} icon="schedule" iconColor="var(--tertiary)" subtitle="Pendientes" index={2} />
+        <MetricCard label="Clientes" value={clientes.length} icon="groups" iconColor="var(--secondary)" subtitle="En directorio" index={3} />
         <MetricCard label="Ganancia Est." value={`S/. ${(totalVentas * 0.7).toFixed(2)}`} icon="trending_up" iconColor="var(--secondary)" subtitle="Margen ~70%" index={4} />
       </div>
 
-      {/* Charts Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 'var(--space-md)', marginBottom: 'var(--space-xl)' }}>
+      {/* Charts Row — stacks on mobile */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : '2fr 1fr',
+        gap: 'var(--space-md)',
+        marginBottom: 'var(--space-xl)',
+      }}>
         {/* Sales Trend */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
@@ -243,7 +260,7 @@ export default function DashboardPage() {
             </span>
           </button>
         </div>
-        <div style={{ overflowX: 'auto' }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           <table className="table-industrial">
             <thead>
               <tr>

@@ -38,6 +38,14 @@ const pageVariants = {
 };
 
 export default function CotizadorPage() {
+  // ── Mobile detection ──
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   // ── Hooks ──
   const analyzer = useAnalyzer();
   const viewer = useViewer();
@@ -167,15 +175,30 @@ export default function CotizadorPage() {
     <motion.div
       variants={pageVariants} initial="initial" animate="animate"
       style={{
-        display: 'flex', gap: 'var(--space-gutter)',
-        height: 'calc(100vh - 64px - 48px)', overflow: 'hidden',
+        display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
+        gap: isMobile ? 10 : 'var(--space-gutter)',
+        height: isMobile ? 'auto' : 'calc(100vh - 64px - 48px)',
+        overflow: isMobile ? 'visible' : 'hidden',
+        minHeight: 0,
       }}
     >
       {/* ═══ LEFT: Viewer + Upload ═══ */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-gutter)', overflow: 'hidden' }}>
+      <div style={{
+        flex: isMobile ? 'none' : 1,
+        display: 'flex', flexDirection: 'column',
+        gap: isMobile ? 8 : 'var(--space-gutter)',
+        overflow: isMobile ? 'visible' : 'hidden',
+        minWidth: 0,
+      }}>
 
         {/* Viewer Container */}
-        <div className="card-level-1" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
+        <div className="card-level-1" style={{
+          flex: isMobile ? 'none' : 1,
+          height: isMobile ? (hasResult ? 260 : 180) : undefined,
+          display: 'flex', flexDirection: 'column',
+          overflow: 'hidden', position: 'relative',
+        }}>
 
           {/* Toolbar */}
           <div style={{
@@ -321,19 +344,19 @@ export default function CotizadorPage() {
           )}
         </div>
 
-        {/* Bottom Panel */}
-        <div style={{
-          height: hasResult ? 'auto' : 192, flexShrink: 0,
-          display: 'flex', gap: 'var(--space-gutter)',
-          minHeight: hasResult ? 0 : 192,
-          maxHeight: hasResult ? 0 : 192,
-          overflow: 'hidden',
-          transition: 'all 0.4s ease',
-        }}>
-          {!hasResult && (
-            <>
-              <FileUploader onFileSelected={handleFileSelected} />
-              {/* Quick info card */}
+        {/* Bottom Panel — File Uploader */}
+        {!hasResult && (
+          <div style={{
+            flexShrink: 0,
+            display: 'flex',
+            gap: isMobile ? 8 : 'var(--space-gutter)',
+            flexDirection: isMobile ? 'column' : 'row',
+            minHeight: isMobile ? 140 : 192,
+            maxHeight: isMobile ? 'none' : 192,
+          }}>
+            <FileUploader onFileSelected={handleFileSelected} />
+            {/* Quick info card — hidden on mobile to save space */}
+            {!isMobile && (
               <div className="card-level-1" style={{ width: '45%', padding: 'var(--space-md)', display: 'flex', flexDirection: 'column' }}>
                 <h3 className="text-label-caps" style={{ color: 'var(--on-surface-variant)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
                   <span className="material-symbols-outlined" style={{ fontSize: 14 }}>info</span>
@@ -344,25 +367,19 @@ export default function CotizadorPage() {
                     { fmt: 'SVG', desc: 'Análisis vectorial completo', status: '✓', color: '#22c55e' },
                     { fmt: 'PDF', desc: 'Extracción de paths vectoriales', status: '✓', color: '#22c55e' },
                     { fmt: 'PNG/JPG', desc: 'Visión computacional (Sobel/Canny)', status: '✓', color: '#22c55e' },
-                    { fmt: 'Cámara', desc: 'Foto directa + calibración de escala', status: '✓', color: '#22c55e' },
+                    { fmt: 'Cámara', desc: 'Foto directa + calibración', status: '✓', color: '#22c55e' },
                   ].map(item => (
                     <div key={item.fmt} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <span style={{ color: item.color, fontSize: 12, fontWeight: 700, width: 14, textAlign: 'center' }}>
-                        {item.status}
-                      </span>
-                      <span className="text-body-sm" style={{ fontWeight: 600, color: 'var(--on-surface)', fontSize: 12 }}>
-                        {item.fmt}
-                      </span>
-                      <span className="text-body-sm" style={{ color: 'var(--on-surface-variant)', fontSize: 11 }}>
-                        — {item.desc}
-                      </span>
+                      <span style={{ color: item.color, fontSize: 12, fontWeight: 700, width: 14 }}>{item.status}</span>
+                      <span style={{ fontWeight: 600, color: 'var(--on-surface)', fontSize: 12, fontFamily: 'Inter' }}>{item.fmt}</span>
+                      <span style={{ color: 'var(--on-surface-variant)', fontSize: 11, fontFamily: 'Inter' }}>— {item.desc}</span>
                     </div>
                   ))}
                 </div>
               </div>
-            </>
-          )}
-        </div>
+            )}
+          </div>
+        )}
 
         {/* File info bar (when result is loaded) */}
         {hasResult && (
@@ -416,7 +433,13 @@ export default function CotizadorPage() {
       </div>
 
       {/* ═══ RIGHT PANEL ═══ */}
-      <div style={{ width: 310, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-gutter)', overflow: 'hidden' }}>
+      <div style={{
+        width: isMobile ? '100%' : 310,
+        flexShrink: isMobile ? 1 : 0,
+        display: 'flex', flexDirection: 'column',
+        gap: isMobile ? 8 : 'var(--space-gutter)',
+        overflow: isMobile ? 'visible' : 'hidden',
+      }}>
 
         {hasResult ? (
           <>
