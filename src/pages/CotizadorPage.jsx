@@ -2,11 +2,12 @@
  * TroquelMaster — Cotizador Page (Rewritten)
  * 
  * Full integration of the troquel analyzer engine.
- * Replaces the static mockup with functional analysis flow.
+ * Supports PDF, SVG, and camera image analysis.
+ * Two quotation modes: LINEAL and CUCHILLAS.
  */
 
-import { useCallback, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useCallback, useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Analyzer module
 import { useAnalyzer } from '../modules/troquel-analyzer/hooks/useAnalyzer.js';
@@ -16,7 +17,7 @@ import { useMeasure } from '../modules/troquel-analyzer/hooks/useMeasure.js';
 import { useQuotation } from '../modules/troquel-analyzer/hooks/useQuotation.js';
 import {
   ViewMode, AnalysisTool, AnalysisStage, ScaleSource,
-  TRACE_COLORS, TRACE_LABELS, TraceType,
+  TRACE_COLORS, TRACE_LABELS, TraceType, TroquelMode, FileType,
 } from '../modules/troquel-analyzer/types.js';
 import { saveAnalysis } from '../modules/troquel-analyzer/services/storage-service.js';
 
@@ -29,6 +30,7 @@ import ConfidenceIndicator from '../modules/troquel-analyzer/components/Confiden
 import ScalePanel from '../modules/troquel-analyzer/components/ScalePanel.jsx';
 import QuotationPanel from '../modules/troquel-analyzer/components/QuotationPanel.jsx';
 import AnalysisProgress from '../modules/troquel-analyzer/components/AnalysisProgress.jsx';
+import CameraCalibration from '../modules/troquel-analyzer/components/CameraCalibration.jsx';
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -41,8 +43,14 @@ export default function CotizadorPage() {
   const viewer = useViewer();
   const scaleHook = useScale();
   const measure = useMeasure(analyzer.result?.scale);
-
   const quotation = useQuotation(analyzer.result);
+
+  // ── Troquel Mode (LINEAL vs CUCHILLAS) ──
+  const [troquelMode, setTroquelMode] = useState(TroquelMode.LINEAL);
+
+  // ── Camera Calibration ──
+  const [showCalibration, setShowCalibration] = useState(false);
+  const [imagePxPerMm, setImagePxPerMm] = useState(null);
 
   // Sync scale from analysis result
   useEffect(() => {
@@ -51,11 +59,30 @@ export default function CotizadorPage() {
     }
   }, [analyzer.result?.scale, analyzer.result?.scaleSource]);
 
+  // When image analyzed without scale, prompt calibration
+  useEffect(() => {
+    if (
+      analyzer.hasResult &&
+      analyzer.result?.scaleSource === 'NONE' &&
+      [FileType.PNG, FileType.JPG, FileType.PHOTO].includes(analyzer.fileType)
+    ) {
+      setShowCalibration(true);
+    }
+  }, [analyzer.hasResult, analyzer.result?.scaleSource, analyzer.fileType]);
+
   // ── Handlers ──
   const handleFileSelected = useCallback((file) => {
     analyzer.loadFile(file);
     viewer.resetView();
+    setImagePxPerMm(null);
   }, [analyzer, viewer]);
+
+  const handleCalibrated = useCallback(({ pxPerMm }) => {
+    setImagePxPerMm(pxPerMm);
+    setShowCalibration(false);
+    // Apply scale to analyzer result
+    analyzer.updateScale(pxPerMm, 'IMAGE_REFERENCE');
+  }, [analyzer]);
 
   const handleTraceClick = useCallback((traceId) => {
     viewer.selectTrace(traceId);
@@ -315,9 +342,9 @@ export default function CotizadorPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
                   {[
                     { fmt: 'SVG', desc: 'Análisis vectorial completo', status: '✓', color: '#22c55e' },
-                    { fmt: 'PDF', desc: 'Fase 2 — próximamente', status: '◌', color: '#f59e0b' },
-                    { fmt: 'PNG/JPG', desc: 'Fase 2 — visión computacional', status: '◌', color: '#f59e0b' },
-                    { fmt: 'Cámara', desc: 'Fase 2 — fotografía directa', status: '◌', color: '#f59e0b' },
+                    { fmt: 'PDF', desc: 'Extracción de paths vectoriales', status: '✓', color: '#22c55e' },
+                    { fmt: 'PNG/JPG', desc: 'Visión computacional (Sobel/Canny)', status: '✓', color: '#22c55e' },
+                    { fmt: 'Cámara', desc: 'Foto directa + calibración de escala', status: '✓', color: '#22c55e' },
                   ].map(item => (
                     <div key={item.fmt} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{ color: item.color, fontSize: 12, fontWeight: 700, width: 14, textAlign: 'center' }}>
@@ -426,6 +453,52 @@ export default function CotizadorPage() {
               <ConfidenceIndicator confidence={analyzer.result?.confidence} />
             </div>
 
+            {/* Troquel Mode Selector */}
+            <div className="card-level-1" style={{ flexShrink: 0, padding: '8px 12px' }}>
+              <div style={{ marginBottom: 6, fontSize: 10, fontWeight: 700, fontFamily: 'Inter', color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                Modo de Cotización
+              </div>
+              <div style={{ display: 'flex', gap: 6 }}>
+                {[
+                  { mode: TroquelMode.LINEAL, label: 'Lineal', icon: 'linear_scale', desc: 'Por cm de cuchilla' },
+                  { mode: TroquelMode.CUCHILLAS, label: 'Cuchillas', icon: 'hardware', desc: 'Por área + montaje' },
+                ].map(({ mode, label, icon, desc }) => (
+                  <button
+                    key={mode}
+                    onClick={() => setTroquelMode(mode)}
+                    style={{
+                      flex: 1, padding: '6px 8px', borderRadius: 6,
+                      backgroundColor: troquelMode === mode ? 'rgba(147,204,255,0.15)' : 'var(--surface)',
+                      border: `1px solid ${troquelMode === mode ? 'rgba(147,204,255,0.4)' : 'var(--outline-variant)'}`,
+                      cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
+                      transition: 'all 0.15s',
+                    }}
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: 18, color: troquelMode === mode ? 'var(--primary)' : 'var(--on-surface-variant)' }}>{icon}</span>
+                    <span style={{ fontFamily: 'Inter', fontSize: 11, fontWeight: 700, color: troquelMode === mode ? 'var(--primary)' : 'var(--on-surface)' }}>{label}</span>
+                    <span style={{ fontFamily: 'Inter', fontSize: 9, color: 'var(--on-surface-variant)' }}>{desc}</span>
+                  </button>
+                ))}
+              </div>
+              {/* Calibration button for images */}
+              {analyzer.hasResult && [FileType.PNG, FileType.JPG, FileType.PHOTO].includes(analyzer.fileType) && (
+                <button
+                  onClick={() => setShowCalibration(true)}
+                  style={{
+                    marginTop: 8, width: '100%', padding: '6px', borderRadius: 5,
+                    backgroundColor: imagePxPerMm ? 'rgba(34,197,94,0.1)' : 'rgba(251,191,36,0.1)',
+                    border: `1px solid ${imagePxPerMm ? 'rgba(34,197,94,0.3)' : 'rgba(251,191,36,0.3)'}`,
+                    color: imagePxPerMm ? '#22c55e' : '#fbbf24',
+                    fontFamily: 'Inter', fontSize: 11, fontWeight: 600, cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 15 }}>straighten</span>
+                  {imagePxPerMm ? `Calibrado: ${imagePxPerMm.toFixed(2)} px/mm` : 'Calibrar escala de imagen'}
+                </button>
+              )}
+            </div>
+
             {/* Quotation Panel */}
             <div className="card-level-1" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
               <QuotationPanel
@@ -441,6 +514,8 @@ export default function CotizadorPage() {
                 onToggleType={quotation.toggleType}
                 formatCurrency={quotation.formatCurrency}
                 onSave={handleSave}
+                troquelMode={troquelMode}
+                analysisResult={analyzer.result}
               />
             </div>
           </>
@@ -500,6 +575,19 @@ export default function CotizadorPage() {
           </div>
         )}
       </div>
+
+      {/* Camera Calibration Overlay */}
+      <AnimatePresence>
+        {showCalibration && analyzer.result?.imagePreview && (
+          <CameraCalibration
+            imagePreview={analyzer.result.imagePreview}
+            imageWidth={analyzer.result.dimensions?.width || 800}
+            imageHeight={analyzer.result.dimensions?.height || 600}
+            onCalibrated={handleCalibrated}
+            onClose={() => setShowCalibration(false)}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

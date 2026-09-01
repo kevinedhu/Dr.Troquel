@@ -12,7 +12,7 @@ export * from './utils/geometry.js';
 
 // Parsers
 export { analyzeSVG, parseSVGMetadata, determineSVGScale, aggregateLengths } from './parsers/svg-parser.js';
-export { analyzePDF } from './parsers/pdf-parser.js';
+export { analyzePDF, isPDFVectorial } from './parsers/pdf-parser.js';
 export { analyzeImage, ImageProcessingPipeline, PipelineStages } from './parsers/image-parser.js';
 
 // Services
@@ -38,3 +38,5 @@ export { default as ConfidenceIndicator } from './components/ConfidenceIndicator
 export { default as ScalePanel } from './components/ScalePanel.jsx';
 export { default as QuotationPanel } from './components/QuotationPanel.jsx';
 export { default as AnalysisProgress } from './components/AnalysisProgress.jsx';
+export { default as CameraCapture } from './components/CameraCapture.jsx';
+export { default as CameraCalibration } from './components/CameraCalibration.jsx';
